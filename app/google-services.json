@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "777033553189",
+    "firebase_url": "https://swes-23d84.firebaseio.com",
+    "project_id": "swes-23d84",
+    "storage_bucket": "swes-23d84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777033553189:android:b1c4ef26b9fa1920",
+        "android_client_info": {
+          "package_name": "gp_project.swes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777033553189-a1ei72b059hd3vp5dhdk1p3a5d1m0spt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz3o1c0FneTW7D5hb_Mjv-2KUXXV5-Y0s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
