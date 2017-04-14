@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_sigin_inor_up"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="swes.swes.activity.SiginINorUP">
+
+    <Button
+        android:text="Sigin Up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_gravity="end"
+        android:id="@+id/button_SiginUP"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+
+        />
+
+    <Button
+        android:text="Sigin In"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:gravity="left"
+        android:id="@+id/button_SiginIn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "619812447348",
+    "firebase_url": "https://swesapp-335ca.firebaseio.com",
+    "project_id": "swesapp-335ca",
+    "storage_bucket": "swesapp-335ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619812447348:android:b1c4ef26b9fa1920",
+        "android_client_info": {
+          "package_name": "gp_project.swes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "619812447348-qdsr16f3etd2q2n2lkhn3sc7c3p9otes.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXy52_uxMgDvkdRWyNtqB9PGzgecIEQuk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619812447348:android:d41a8b1f96b3f4d1",
+        "android_client_info": {
+          "package_name": "swes.swes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "619812447348-28nm4fklbqjumg0l8167gokulbis6ei9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "swes.swes",
+            "certificate_hash": "9181ba29668976d6ba8c6a203a4b5636b2c97e8c"
+          }
+        },
+        {
+          "client_id": "619812447348-qdsr16f3etd2q2n2lkhn3sc7c3p9otes.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXy52_uxMgDvkdRWyNtqB9PGzgecIEQuk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "619812447348-qdsr16f3etd2q2n2lkhn3sc7c3p9otes.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
