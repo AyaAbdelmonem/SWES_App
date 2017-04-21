@@ -1,5 +1,6 @@
 package swes.swes.activity;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.auth.FirebaseAuth;
 
 import swes.swes.R;
 import swes.swes.fragment.FAQFragment;
@@ -374,6 +376,12 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
+             FirebaseAuth auth;
+            auth = FirebaseAuth.getInstance();
+            auth.signOut();
+            Intent intent =new Intent(MainActivity.this,SiginINorUP.class);
+            startActivity(intent);
+            finish();
             return true;
         }
 
@@ -381,6 +389,12 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(MainActivity.this,SettingsActivity.class);
             startActivity(i);
             finish();
+            return true;
+        }
+        if (id == R.id.notification) {
+            Intent i = new Intent(MainActivity.this,NotificationActivity.class);
+            startActivity(i);
+
             return true;
         }
 

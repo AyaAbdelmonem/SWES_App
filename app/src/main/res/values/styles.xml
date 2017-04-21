@@ -43,6 +43,16 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
+    <style name="round_edged_button">
+         <item name="android:bottomLeftRadius">20dp</item>
+        <item name="android:bottomRightRadius">20dp</item>
+        <item name="android:topLeftRadius">20dp</item>
+        <item name="android:topRightRadius">20dp</item>
+
+
+    </style>
+
  
 
 

@@ -29,7 +29,17 @@
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.SiginINorUP" />
         <activity android:name=".activity.SiginInActivity" />
-        <activity android:name=".activity.SiginUpActivity"></activity>
+        <activity android:name=".activity.SiginUpActivity" />
+        <activity android:name=".activity.NotificationActivity" />
+
+        <receiver
+            android:name=".receivers.NetworkReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

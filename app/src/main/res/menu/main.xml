@@ -13,5 +13,11 @@
         android:orderInCategory="100"
         android:title="@string/action_logout"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/notification"
+        android:orderInCategory="100"
+        android:title="@string/action_logout"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_notification_bell"/>
 
 </menu>

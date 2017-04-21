@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 
@@ -16,6 +17,10 @@ public class SplashScreen extends Activity {
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 3000;
 
+
+
+    //private ProgressBar progressBar;
+
     ProgressBar mprogressBar;
 
     @Override
@@ -23,17 +28,19 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        mprogressBar = (ProgressBar) findViewById(R.id.circular_progress_bar);
+        mprogressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mprogressBar.setVisibility(View.VISIBLE);
+        mprogressBar.getIndeterminateDrawable().setColorFilter(getResources()
+                .getColor(R.color.dot_dark_screen3)
+                , android.graphics.PorterDuff.Mode.MULTIPLY);
+
         ObjectAnimator anim = ObjectAnimator.ofInt(mprogressBar, "progress", 0, 100);
         anim.setDuration(3000);
         anim.setInterpolator(new DecelerateInterpolator());
         anim.start();
         new Handler().postDelayed(new Runnable() {
 
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo
-             */
+
 
             @Override
             public void run() {
@@ -47,8 +54,10 @@ public class SplashScreen extends Activity {
             }
         }, SPLASH_TIME_OUT);
 
-
-           }
+/*
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);*/
+    }
 
 
 }
