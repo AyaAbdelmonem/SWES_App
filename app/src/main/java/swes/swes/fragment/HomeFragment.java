@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
+import swes.swes.Adapters.HomeGridViewAdapter;
 import swes.swes.R;
 
 import static swes.swes.R.layout.bmb;
@@ -102,8 +104,12 @@ public class HomeFragment extends Fragment {
 
 for (int i=0;i <5;i++)
 {
-    DrawBmb(view);
+   // DrawBmb(view);
 }
+        GridView gridView = (GridView) view.findViewById(R.id.grid_view);
+
+        // Instance of ImageAdapter Class
+        gridView.setAdapter(new HomeGridViewAdapter(getActivity(),view));
 
 
      /*   Button myButton = new Button(getActivity());

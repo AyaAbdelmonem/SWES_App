@@ -16,7 +16,7 @@ import swes.swes.R;
 public class SettingsActivity extends AppCompatActivity {
 
 
-    static int theme;
+   public static int theme;
     static int tom = 0;
 
     View layout;
