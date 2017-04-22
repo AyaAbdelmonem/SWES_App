@@ -2,6 +2,7 @@ package swes.swes.activity;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -26,6 +27,8 @@ public class NotificationActivity extends AppCompatActivity {
     static int rt;
     static int theme;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +39,9 @@ public class NotificationActivity extends AppCompatActivity {
         SettingsActivity.theme = sharedPreferences.getInt("theme", 0);
 
 
+       // CardView notiification_card =(CardView) findViewById(R.id.notiification_card);
 
-        CardView notiification_card =(CardView) findViewById(R.id.notiification_card);
-
-        View layout=  findViewById(R.id.activity_notification);
+       // View layout=  findViewById(R.id.activity_notification);
 
         rt = SettingsActivity.theme;
 
@@ -50,6 +52,28 @@ public class NotificationActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_notification);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                 fetchResults();
+            }
+        });
+        swipeRefreshLayout.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        swipeRefreshLayout.setRefreshing(true);
+                                        fetchResults();
+
+
+                                    }
+                                }
+        );
+
+
 
 
 
@@ -127,5 +151,10 @@ public class NotificationActivity extends AppCompatActivity {
             recyclerView_n.setBackgroundColor(0xff424242);
         }*/
 
+    }
+    void fetchResults(){
+
+        Toast.makeText(NotificationActivity.this,"Refreshing",Toast.LENGTH_SHORT).show();
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

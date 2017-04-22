@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:textSize="9sp"
         android:text="sss"
-        android:layout_marginLeft="24dp"
+        android:layout_marginLeft="27dp"
         >
     </TextView>
 
