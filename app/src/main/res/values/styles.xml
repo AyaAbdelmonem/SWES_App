@@ -3,10 +3,18 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:windowBackground">@color/grey50</item>
-        <item name="colorPrimary">@color/blue500</item>
-        <item name="colorPrimaryDark">@color/blue700</item>
+        <item name="android:windowBackground">@color/aya3</item>
+        <item name="colorPrimary">@color/aya2</item>
+        <item name="colorPrimaryDark">@color/aya2</item>
         <item name="colorAccent">@color/reda200</item>
+        <item name="android:itemBackground">@color/aya3</item>
+        <item name ="android:actionMenuTextColor">@color/aya2</item>
+        <item name="android:textColor">@color/aya2</item>
+        <item name ="android:textColorLink">@color/aya2</item>
+        <item name ="android:textColorHint">@color/aya2</item>
+        <item name ="android:textColorSecondary">@color/aya2</item>
+        <item name ="android:textColorPrimary">@color/aya2</item>
+
     </style>
 
     <style name="DarkAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -17,6 +25,11 @@
         <item name="colorPrimaryDark">@color/blue700</item>
         <item name="colorAccent">@color/reda200</item>
         <item name="android:textColor">@color/white</item>
+        <item name ="android:actionMenuTextColor">@color/white</item>
+        <item name ="android:textColorLink">@color/white</item>
+        <item name ="android:textColorHint">@color/white</item>
+        <item name ="android:textColorSecondary">@color/white</item>
+        <item name ="android:textColorPrimary">@color/white</item>
         <item name="android:itemBackground">@color/darkgrey</item>
 
     </style>

@@ -1,6 +1,7 @@
 package swes.swes.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import swes.swes.R;
+import swes.swes.youtube.YoutubeActivity;
 
 /**
  * Created by Sameh on 4/21/2017.
@@ -119,8 +121,8 @@ public class HomeGridViewAdapter extends BaseAdapter {
 
             bmb.setButtonEnum(ButtonEnum.Ham);
             bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_4);
-            bmb.setNormalColor(mContext.getResources().getColor(R.color.dot_dark_screen4));
-            bmb.setHighlightedColor(mContext.getResources().getColor(R.color.dot_dark_screen4));
+            bmb.setNormalColor(mContext.getResources().getColor(R.color.aya1));
+            bmb.setHighlightedColor(mContext.getResources().getColor(R.color.aya1));
             bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_4);
             for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
                 HamButton.Builder builder = new HamButton.Builder()
@@ -132,6 +134,8 @@ public class HomeGridViewAdapter extends BaseAdapter {
                             public void onBoomButtonClick(int index) {
                                 // When the boom-button corresponding this builder is clicked.
                                 Toast.makeText(mContext, "Clicked on Index " + index+ " Position "+position, Toast.LENGTH_SHORT).show();
+                                Intent intent =new Intent(mContext, YoutubeActivity.class);
+                                mContext.startActivity(intent);
                             }
                         });
                 bmb.addBuilder(builder);

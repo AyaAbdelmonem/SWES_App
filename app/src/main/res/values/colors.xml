@@ -53,4 +53,12 @@
     <color name="background_SiginUP">#865E67</color>
     <color name="button_siginUP">#E5D8C7</color>
 
+
+    <color name="aya1">#6BA7A9</color>
+    <color name="aya2">#724952</color>
+    <color name="aya3">#E5D8C7</color>
+
+
+    <color name="shadow">#555555</color>
+    <color name="title">#777777</color>
 </resources>

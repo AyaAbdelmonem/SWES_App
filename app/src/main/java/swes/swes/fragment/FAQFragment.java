@@ -1,13 +1,34 @@
 package swes.swes.fragment;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import swes.swes.Adapters.ExpandableListAdapter;
+import swes.swes.Models.FAQ;
 import swes.swes.R;
 
 /**
@@ -23,6 +44,20 @@ public class FAQFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    //ProgressDialog progressDialog;
+
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("FAQ");
+
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -59,13 +94,51 @@ public class FAQFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_faq, container, false);
+       View  view =inflater.inflate(R.layout.fragment_faq, container, false);
+
+
+        expListView = (ExpandableListView) view.findViewById(R.id.lvExp);
+        prepareListData();
+
+       /* progressDialog =new ProgressDialog(getActivity());
+        progressDialog.show();
+        progressDialog.setMessage("Loading Data");
+        progressDialog.setTitle("Loading");
+       progressDialog.setCanceledOnTouchOutside(false);*/
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                prepareListData();
+            }
+        });
+        swipeRefreshLayout.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        swipeRefreshLayout.setRefreshing(true);
+                                        prepareListData();
+
+
+
+                                    }
+                                }
+        );
+
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -73,6 +146,13 @@ public class FAQFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
     }
 
     @Override
@@ -84,6 +164,7 @@ public class FAQFragment extends Fragment {
 /*            throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");*/
         }
+
     }
 
     @Override
@@ -106,4 +187,67 @@ public class FAQFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
+
+
+    private void prepareListData() {
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+
+
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+
+
+                listDataHeader.clear();
+                listDataChild.clear();
+
+                GenericTypeIndicator<ArrayList<FAQ>> t = new GenericTypeIndicator<ArrayList<FAQ>>() {};
+                ArrayList<FAQ>  read_list = dataSnapshot.getValue(t);
+
+                for (int i=0;i<read_list.size();i++) {
+                    ArrayList<String> newList =new ArrayList<String>();
+                    newList .add(read_list.get(i).getAnswer());
+                    listDataHeader.add(read_list.get(i).getQuestion());
+                    listDataChild.put(read_list.get(i).getQuestion(),newList);
+                    //Log.d("222222222222",read_list.get(i).getAnswer());
+                }
+              //  progressDialog.dismiss();
+                swipeRefreshLayout.setRefreshing(false);
+                listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+                expListView.setAdapter(listAdapter);
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("No Internet")
+                        .setMessage("Check Internet connection")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // getActivity().dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+                            }
+                        })
+
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
+
+
+        //progressDialog.dismiss();
+    }
+
+
+
+
 }

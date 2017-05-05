@@ -17,9 +17,10 @@
     <string-array name="nav_item_activity_titles">
         <item>Home</item>
         <item>FAQ</item>
-        <item>Language</item>
         <item>Refrences</item>
         <item>Settings</item>
+        <item>Subscrition</item>
+
     </string-array>
 
     <string name="activity_title_about_us">About Us</string>
@@ -56,4 +57,28 @@
     <string name="dark">Dark Theme</string>
     <string name="darkdesc">Enable/Disable dark theme</string>
     <string name="auth_failed">Failed</string>
+
+
+    <string name="title_logo">NATIONAL GEOGRAPHIC</string>
+    <string name="btn_skip_intro">Skip Intro</string>
+
+
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+
+    <string-array name="faq_questions">
+        <item>What\'s SWES?</item>
+        <item>What\'s Category this app is under?</item>
+        <item>What Service we provide?</item>
+        <item>How to get the biggest benefits?</item>
+        <item>How to send my feedback?</item>
+    </string-array>
+    <string-array name="faq_Answes">
+        <item>SWES is a Software Engineering Learning App for students</item>
+        <item>This App is under m-Learning</item>
+        <item>We provide you Tutorials, Stories, Case studies and tests in an interactive enviroment</item>
+        <item>You can See our Tutorials and Stories solve tests and get Interactive with our app forum</item>
+        <item>You can send us feedback with clicking on fab</item>
+    </string-array>
+
+
 </resources>

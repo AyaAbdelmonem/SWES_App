@@ -1,6 +1,8 @@
 package swes.swes.activity;
 
+import android.app.AlertDialog;
 import android.app.Notification;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,20 +31,32 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import swes.swes.Models.FAQ;
 import swes.swes.R;
 import swes.swes.fragment.FAQFragment;
 import swes.swes.fragment.HomeFragment;
 import swes.swes.fragment.LanguageFragment;
 import swes.swes.fragment.RefrencesFragment;
 import swes.swes.fragment.SettingsFragment;
+import swes.swes.fragment.SubscribtionFragment;
 import swes.swes.other.CircleTransform;
 
 public class MainActivity extends AppCompatActivity {
 
 
     static int rt;
-
+    ArrayList<FAQ> read_list;
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -62,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
     // tags used to attach the fragments
     private static final String TAG_HOME = "home";
     private static final String TAG_FAQ = "faq";
-    private static final String TAG_MOVIES = "movies";
-    private static final String TAG_NOTIFICATIONS = "notifications";
+    private static final String TAG_Refrence = "refrences";
+    private static final String TAG_Subscribtion = "subscribtion";
     private static final String TAG_SETTINGS = "settings";
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -78,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
         SharedPreferences sharedPreferences;
@@ -190,11 +204,12 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 // update the main content by replacing fragments
                 Fragment fragment = getHomeFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                if (fragment!=null)
+                {FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                         android.R.anim.fade_out);
                 fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
-                fragmentTransaction.commitAllowingStateLoss();
+                fragmentTransaction.commitAllowingStateLoss();}
             }
         };
 
@@ -220,22 +235,25 @@ public class MainActivity extends AppCompatActivity {
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 1:
-                // FAQ
-                FAQFragment FAQ_fragment = new FAQFragment();
+                 //FAQ
+               FAQFragment FAQ_fragment = new FAQFragment();
                 return FAQ_fragment;
+               // Intent i = new Intent(MainActivity.this, FAQActivity.class);
+                //startActivity(i);
+               //return  null;
             case 2:
                 // Languagae fragment
-                LanguageFragment LanguageFragment = new LanguageFragment();
-                return LanguageFragment;
+                RefrencesFragment refrencesFragment = new RefrencesFragment();
+                return refrencesFragment;
             case 3:
                 // notifications fragment
-                RefrencesFragment RefrenceFragment = new RefrencesFragment();
-                return RefrenceFragment;
+                SettingsFragment settingsFragment = new SettingsFragment();
+                return settingsFragment;
 
             case 4:
                 // settings fragment
-                SettingsFragment settingsFragment = new SettingsFragment();
-                return settingsFragment;
+                SubscribtionFragment subscribtionFragment = new SubscribtionFragment();
+                return subscribtionFragment;
             default:
                 return new HomeFragment();
         }
@@ -264,22 +282,24 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_HOME;
                         break;
-                    case R.id.nav_language:
+                    case R.id.nav_faq:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_FAQ;
                         break;
                     case R.id.nav_refrence:
                         navItemIndex = 2;
-                        CURRENT_TAG = TAG_MOVIES;
+                        CURRENT_TAG = TAG_Refrence;
                         break;
-                    case R.id.faq:
-                        navItemIndex = 3;
-                        CURRENT_TAG = TAG_NOTIFICATIONS;
-                        break;
+
                     case R.id.nav_settings:
-                        navItemIndex = 4;
+                        navItemIndex = 3;
                         CURRENT_TAG = TAG_SETTINGS;
                         break;
+                    case R.id.nav_subscribion:
+                        navItemIndex = 4;
+                        CURRENT_TAG = TAG_Subscribtion;
+                        break;
+
                     case R.id.nav_about_us:
                         // launch new intent instead of loading fragment
                         startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
@@ -423,6 +443,35 @@ public class MainActivity extends AppCompatActivity {
         else
             fab.hide();
     }
+
+    private ArrayList<FAQ> prepareListData() {
+
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("FAQ");
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                GenericTypeIndicator<ArrayList<FAQ>> t = new GenericTypeIndicator<ArrayList<FAQ>>() {};
+                  read_list = dataSnapshot.getValue(t);
+                  Log.d("FFFFFFFFFFFFF","FFFFFFFFFFFFF");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+
+            }
+        });
+
+     return read_list;
+
+        //progressDialog.dismiss();
+    }
+
 
 
 }
