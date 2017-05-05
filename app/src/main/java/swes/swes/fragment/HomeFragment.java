@@ -1,6 +1,7 @@
 package swes.swes.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -17,16 +17,13 @@ import android.widget.Toast;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
-import com.nightonke.boommenu.BoomButtons.SimpleCircleButton;
-import com.nightonke.boommenu.BoomButtons.TextInsideCircleButton;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import swes.swes.Adapters.HomeGridViewAdapter;
+import swes.swes.activity.LevelsActivity;
 import swes.swes.R;
-
-import static swes.swes.R.layout.bmb;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,36 +86,21 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_home, container, false);
 
-       /* BoomMenuButton bmb = (BoomMenuButton) view.findViewById(R.id.bmb_levels);
-        bmb.setButtonEnum(ButtonEnum.TextInsideCircle);
-        bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_4_1);
 
-        bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_4_2);
+        Button Goto_course_button =(Button) view.findViewById(R.id.gotoCourse_button);
 
-        for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
-            TextInsideCircleButton.Builder builder = new TextInsideCircleButton.Builder()
-                    .normalImageRes(R.drawable.ic_language)
-                    .normalText("Butter Doesn't fly!");
-            bmb.addBuilder(builder);
-        }*/
-
-for (int i=0;i <5;i++)
-{
-   // DrawBmb(view);
-}
-        GridView gridView = (GridView) view.findViewById(R.id.grid_view);
-
-        // Instance of ImageAdapter Class
-        gridView.setAdapter(new HomeGridViewAdapter(getActivity(),view));
+        Goto_course_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),LevelsActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
 
-     /*   Button myButton = new Button(getActivity());
-        myButton.setText("Add Me");
 
-        FrameLayout ll = (FrameLayout)view.findViewById(R.id.fragment_home);
-        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        ll.addView(myButton, lp);*/
+
+
 
         return view;
     }

@@ -19,6 +19,7 @@ import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import swes.swes.R;
+import swes.swes.activity.LessonActivity;
 import swes.swes.youtube.YoutubeActivity;
 
 /**
@@ -29,26 +30,28 @@ public class HomeGridViewAdapter extends BaseAdapter {
 
     private Context mContext;
 
-    private View HomeView;
+    private  int Length;
+   // private View HomeView;
     // Keep all Images in array
     public Integer[] mThumbIds = {
-     1,2,3,4,5,6,7
+     1,2,3,4,5,6,7,8
     };
 
     // Constructor
-    public HomeGridViewAdapter(Context c,View HomeView){
+    public HomeGridViewAdapter(Context c ,int size){
         mContext = c;
-        this.HomeView=HomeView;
+     //   this.HomeView=HomeView;
+        this.Length=size;
     }
 
     @Override
     public int getCount() {
-        return mThumbIds.length;
+        return Length;
     }
 
     @Override
     public Object getItem(int position) {
-        return mThumbIds[position];
+        return Length;
     }
 
     @Override
@@ -60,53 +63,7 @@ public class HomeGridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        /*ImageView imageView = new ImageView(mContext);
-        imageView.setImageResource(mThumbIds[position]);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));*/
-/*
-        BoomMenuButton bmb=null;
-        for (int j = 0; j < 7; j++) {
-             bmb = new BoomMenuButton(mContext);
-            bmb.setButtonEnum(ButtonEnum.Ham);
-            bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_4);
-            // bmb.setBackgroundColor(getResources().getColor(R.color.dot_dark_screen4));
-            bmb.setNormalColor(mContext.getResources().getColor(R.color.dot_dark_screen4));
-            bmb.setHighlightedColor(mContext.getResources().getColor(R.color.dot_dark_screen4));
-            bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_4);
 
-
-            bmb.setLayoutParams(new GridView.LayoutParams(120,120));
-            LinearLayout ll = (LinearLayout)HomeView.findViewById(R.id.fragment_home);
-            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            TextView label =new TextView(mContext);
-
-            label.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.WRAP_CONTENT, GridView.LayoutParams.WRAP_CONTENT));
-
-            label.setText("bmb at    now"+position);
-
-            ll.addView(label, lp);
-
-
-            for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
-                HamButton.Builder builder = new HamButton.Builder()
-                        .normalImageRes(R.drawable.ic_home)
-                        .normalText("Butter Doesn't fly!")
-                        .subNormalText("Little butter Doesn't fly, either!")
-                        .listener(new OnBMClickListener() {
-                            @Override
-                            public void onBoomButtonClick(int index) {
-                                // When the boom-button corresponding this builder is clicked.
-                                Toast.makeText(mContext, "Clicked on Index " + index+ " Position "+position, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                bmb.addBuilder(builder);
-            }
-            return bmb;
-
-        }
-        return bmb;*/
         View grid;
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -134,7 +91,7 @@ public class HomeGridViewAdapter extends BaseAdapter {
                             public void onBoomButtonClick(int index) {
                                 // When the boom-button corresponding this builder is clicked.
                                 Toast.makeText(mContext, "Clicked on Index " + index+ " Position "+position, Toast.LENGTH_SHORT).show();
-                                Intent intent =new Intent(mContext, YoutubeActivity.class);
+                                Intent intent =new Intent(mContext, LessonActivity.class);
                                 mContext.startActivity(intent);
                             }
                         });

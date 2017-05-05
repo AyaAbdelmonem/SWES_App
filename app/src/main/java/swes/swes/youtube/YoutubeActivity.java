@@ -22,6 +22,8 @@ public class YoutubeActivity extends YouTubeBaseActivity implements
 
     private static final int RECOVERY_DIALOG_REQUEST = 1;
 
+    int backpressed=0;
+
     // YouTube player view
     private YouTubePlayerView youTubeView;
 
@@ -105,6 +107,16 @@ public class YoutubeActivity extends YouTubeBaseActivity implements
 
     @Override
     public void onSeekTo(int i) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        backpressed++;
+
+        Toast.makeText(getApplicationContext(),"Press back again to exit",Toast.LENGTH_LONG).show();
+        if (backpressed>1)
+        {super.onBackPressed();}
 
     }
 }

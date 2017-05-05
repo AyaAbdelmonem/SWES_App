@@ -106,7 +106,7 @@ public class FAQFragment extends Fragment {
 
 
         expListView = (ExpandableListView) view.findViewById(R.id.lvExp);
-        prepareListData();
+        //prepareListData();
 
        /* progressDialog =new ProgressDialog(getActivity());
         progressDialog.show();
