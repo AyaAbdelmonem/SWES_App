@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +18,6 @@ import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import swes.swes.R;
 import swes.swes.activity.LessonActivity;
-import swes.swes.youtube.YoutubeActivity;
 
 /**
  * Created by Sameh on 4/21/2017.

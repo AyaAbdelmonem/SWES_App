@@ -31,7 +31,10 @@ import com.firebase.jobdispatcher.Job;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.List;
+
 import swes.swes.FirebaseNotification.MyJobService;
+import swes.swes.Models.NotificationModel;
 import swes.swes.R;
 import swes.swes.activity.NotificationActivity;
 
@@ -126,6 +129,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
+
+        List<NotificationModel>  notificationLists ;
+      //  NotificationModel model =new NotificationModel(messageBody,)
+        Log.d(TAG, "5555555555555555555555 " + messageBody);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

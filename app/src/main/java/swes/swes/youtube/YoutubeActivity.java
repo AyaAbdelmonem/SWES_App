@@ -1,5 +1,6 @@
 package swes.swes.youtube;
 
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -26,6 +27,8 @@ public class YoutubeActivity extends YouTubeBaseActivity implements
 
     // YouTube player view
     private YouTubePlayerView youTubeView;
+
+    Boolean isLandscape;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +71,15 @@ public class YoutubeActivity extends YouTubeBaseActivity implements
             player.loadVideo(Config.YOUTUBE_VIDEO_CODE);
 
 
-            // Hiding player controls
             player.setPlayerStyle(PlayerStyle.DEFAULT);
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+               player.setFullscreen(true);
+            }
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+
+                player.setFullscreen(false);
+            }
+
         }
     }
 
@@ -118,5 +128,20 @@ public class YoutubeActivity extends YouTubeBaseActivity implements
         if (backpressed>1)
         {super.onBackPressed();}
 
+    }
+
+    @Override //reconfigure display properties on screen rotation
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        //Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
+        {
+              isLandscape=false;
+        }
+        else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            isLandscape=true;
+        }
     }
 }

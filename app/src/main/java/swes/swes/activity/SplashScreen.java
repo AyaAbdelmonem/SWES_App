@@ -39,11 +39,11 @@ public class SplashScreen extends Activity {
         mprogressBar = (ProgressBar) findViewById(R.id.progressBar);
         mprogressBar.setVisibility(View.VISIBLE);
         mprogressBar.getIndeterminateDrawable().setColorFilter(getResources()
-                .getColor(R.color.dot_dark_screen3)
+                .getColor(R.color.aya2)
                 , android.graphics.PorterDuff.Mode.MULTIPLY);
 
         ObjectAnimator anim = ObjectAnimator.ofInt(mprogressBar, "progress", 0, 100);
-        anim.setDuration(3000);
+        anim.setDuration(1000);
         anim.setInterpolator(new DecelerateInterpolator());
         anim.start();
 

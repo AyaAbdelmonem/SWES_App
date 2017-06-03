@@ -15,7 +15,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import swes.swes.PostsFeature.User;
 import swes.swes.R;
 
 public class SiginInActivity extends AppCompatActivity {
@@ -25,6 +29,10 @@ public class SiginInActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button  btnLogin, btnReset;
+
+    private DatabaseReference mDatabase;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,7 @@ public class SiginInActivity extends AppCompatActivity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
         btnReset.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +108,8 @@ public class SiginInActivity extends AppCompatActivity {
                                 } else {
                                     Intent intent = new Intent(SiginInActivity.this, MainActivity.class);
 
+                                    onAuthSuccess(task.getResult().getUser());
+
                                      startActivity(intent);
                                     finish();
                                     Toast.makeText(getApplicationContext(),"Login Successfully",Toast.LENGTH_SHORT);
@@ -108,4 +119,29 @@ public class SiginInActivity extends AppCompatActivity {
             }
         });
     }
+    private void onAuthSuccess(FirebaseUser user) {
+        String username = user.getEmail();
+
+        // Write new user
+        writeNewUser(user.getUid(), username, user.getEmail());
+
+        // Go to MainActivity
+
+    }
+    private void writeNewUser(String userId, String name, String email) {
+        User user = new User(name, email);
+
+        mDatabase.child("users").child(userId).setValue(user);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Check auth on Activity start
+       /* if (auth.getCurrentUser() != null) {
+            onAuthSuccess(auth.getCurrentUser());
+        }*/
+    }
+
 }

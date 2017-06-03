@@ -8,7 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -34,6 +37,9 @@ public class SubscribtionFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    String Event=null;
+    Spinner spinner;
 
     public SubscribtionFragment() {
         // Required empty public constructor
@@ -89,18 +95,40 @@ public class SubscribtionFragment extends Fragment {
         }
         // [END handle_data_extras]
 
+      spinner  =(Spinner)view.findViewById(R.id.spinner);
+        String[] choices=new String[]{"Videos","Case Studies","Levels","Lessons","Tests","Posts&Comments","All"};
+        ArrayAdapter<String> SpinnerArrayAdapt= new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, choices);
+        SpinnerArrayAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(SpinnerArrayAdapt);
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Event = spinner.getSelectedItem().toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         Button subscribeButton = (Button) view.findViewById(R.id.subscribeButton);
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Event!=null)
                 // [START subscribe_topics]
-                FirebaseMessaging.getInstance().subscribeToTopic("news");
+                {  FirebaseMessaging.getInstance().subscribeToTopic(Event);
                 // [END subscribe_topics]
 
                 // Log and toast
                // String msg = getString(R.string.msg_subscribed);
                // Log.d(TAG, msg);
-                Toast.makeText(getActivity(), "Subscribed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), Event, Toast.LENGTH_SHORT).show();}
+
             }
         });
 

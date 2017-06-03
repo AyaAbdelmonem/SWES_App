@@ -13,6 +13,7 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
+import swes.swes.PostsFeature.PostsMainActivity;
 import swes.swes.R;
 import swes.swes.youtube.YoutubeActivity;
 
@@ -44,6 +45,8 @@ public class LessonActivity extends AppCompatActivity {
                            if (index==0)
                            {Intent intent =new Intent(getApplicationContext(), YoutubeActivity.class);
                             startActivity(intent);}
+
+
                         }
                     });
             bmb.addBuilder(builder);

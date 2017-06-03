@@ -15,6 +15,7 @@ public class NotificationModel {
 
     }
 
+
     public NotificationModel()
     {
 

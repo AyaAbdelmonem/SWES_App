@@ -43,10 +43,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import swes.swes.Models.FAQ;
+import swes.swes.PostsFeature.PostsMainActivity;
 import swes.swes.R;
 import swes.swes.fragment.FAQFragment;
 import swes.swes.fragment.HomeFragment;
-import swes.swes.fragment.LanguageFragment;
 import swes.swes.fragment.RefrencesFragment;
 import swes.swes.fragment.SettingsFragment;
 import swes.swes.fragment.SubscribtionFragment;
@@ -55,7 +55,7 @@ import swes.swes.other.CircleTransform;
 public class MainActivity extends AppCompatActivity {
 
 
-    static int rt;
+  public  static int rt;
     ArrayList<FAQ> read_list;
 
     private NavigationView navigationView;
@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtName, txtWebsite;
     private Toolbar toolbar;
     private FloatingActionButton fab;
+
+
 
     // urls to load navigation header background image
     // and profile image
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_Refrence = "refrences";
     private static final String TAG_Subscribtion = "subscribtion";
     private static final String TAG_SETTINGS = "settings";
+    private  static  final String TAG_LOGOUT= "logout";
     public static String CURRENT_TAG = TAG_HOME;
 
     // toolbar titles respected to selected nav menu item
@@ -90,9 +93,13 @@ public class MainActivity extends AppCompatActivity {
     private Handler mHandler;
 
 
+    private FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        auth = FirebaseAuth.getInstance();
 
 
         SharedPreferences sharedPreferences;
@@ -120,8 +127,28 @@ public class MainActivity extends AppCompatActivity {
         navHeader = navigationView.getHeaderView(0);
         txtName = (TextView) navHeader.findViewById(R.id.name);
         txtWebsite = (TextView) navHeader.findViewById(R.id.website);
-        imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
+        //imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
         imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
+
+        //clickable profile name and Image
+        txtName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(getApplicationContext(),"Clickable Text",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"Clickable Profile Image",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
@@ -145,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
         }
+
     }
 
     /***
@@ -154,25 +182,28 @@ public class MainActivity extends AppCompatActivity {
      */
     private void loadNavHeader() {
         // name, website
-        txtName.setText("SWES");
-        txtWebsite.setText("SWESAPP");
+        if (auth.getCurrentUser() != null) {
+            txtName.setText(auth.getCurrentUser().getEmail());
+
+        }
+       // txtWebsite.setText("SWESAPP");
 
         // loading header background image
-        Glide.with(this).load(urlNavHeaderBg)
+      /*  Glide.with(this).load(urlNavHeaderBg)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgNavHeaderBg);
+                .into(imgNavHeaderBg);*/
 
         // Loading profile image
-        Glide.with(this).load(urlProfileImg)
+      /*  Glide.with(this).load(urlProfileImg)
                 .crossFade()
                 .thumbnail(0.5f)
                 .bitmapTransform(new CircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgProfile);
+                .into(imgProfile);*/
 
         // showing dot next to notifications label
-        navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
+       // navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
     }
 
     /***
@@ -254,6 +285,16 @@ public class MainActivity extends AppCompatActivity {
                 // settings fragment
                 SubscribtionFragment subscribtionFragment = new SubscribtionFragment();
                 return subscribtionFragment;
+            case 5:
+                  //logout
+                Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
+                FirebaseAuth auth;
+                auth = FirebaseAuth.getInstance();
+                auth.signOut();
+                Intent intent =new Intent(MainActivity.this,SiginINorUP.class);
+                startActivity(intent);
+                finish();
+
             default:
                 return new HomeFragment();
         }
@@ -299,10 +340,26 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 4;
                         CURRENT_TAG = TAG_Subscribtion;
                         break;
+                    case R.id.nav_logout:
+                        navItemIndex = 5;
+                        CURRENT_TAG = TAG_LOGOUT;
+                        break;
 
                     case R.id.nav_about_us:
                         // launch new intent instead of loading fragment
                         startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
+                        drawer.closeDrawers();
+                        return true;
+
+                    case R.id.posts:
+                        startActivity(new Intent(MainActivity.this, PostsMainActivity.class));
+                        drawer.closeDrawers();
+                        return true;
+
+                    case R.id.share_SocialMedia:
+                        // launch new intent instead of loading fragment
+
+
                         drawer.closeDrawers();
                         return true;
 
@@ -394,7 +451,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
+     /*   if (id == R.id.action_logout) {
             Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
              FirebaseAuth auth;
             auth = FirebaseAuth.getInstance();
@@ -403,14 +460,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
             return true;
-        }
+        }*/
 
-        if (id == R.id.settings) {
+/*        if (id == R.id.settings) {
             Intent i = new Intent(MainActivity.this,SettingsActivity.class);
             startActivity(i);
             finish();
             return true;
-        }
+        }*/
         if (id == R.id.notification) {
             Intent i = new Intent(MainActivity.this,NotificationActivity.class);
             startActivity(i);

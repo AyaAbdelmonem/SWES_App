@@ -24,7 +24,22 @@
             android:id="@+id/nav_subscribion"
             android:icon="@drawable/ic_language"
             android:title="Subscribition" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_language"
+            android:title="Logout"
+            />
     </group>
+
+
+
+
+        <item android:id="@+id/posts"
+            android:title="posts"
+            android:icon="@drawable/icons8comments32"
+            />
+
 
     <item android:title="Other">
         <menu>
@@ -32,8 +47,8 @@
                 android:id="@+id/nav_about_us"
                 android:title="@string/nav_about_us" />
             <item
-                android:id="@+id/nav_privacy_policy"
-                android:title="@string/privacy_policy" />
+                android:id="@+id/share_SocialMedia"
+                android:title="@string/share_SM" />
         </menu>
     </item>
 
