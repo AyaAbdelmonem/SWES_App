@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,6 +56,8 @@ import swes.swes.activity.LevelsActivity;
 import swes.swes.R;
 import swes.swes.classes.CourseInfo;
 import swes.swes.classes.Ref;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,12 +89,14 @@ public class HomeFragment extends Fragment {
 
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("message");
+    DatabaseReference myRef = database.getReference("CC");
     String value=null;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    NotificationCompat.Builder builder;
 
     private OnFragmentInteractionListener mListener;
 
@@ -125,35 +130,60 @@ public class HomeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 //// trying push notification 
-        myRef.addValueEventListener(new ValueEventListener() {
+
+
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("CC");
+        final Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        builder = new NotificationCompat.Builder(getActivity());
+        mRootRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                value    = dataSnapshot.getValue(String.class);
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                builder.setSmallIcon(R.mipmap.ic_launcher);
+//                builder.setContentTitle("Firebase Push Notification");
+//                builder.setContentText(s);
+//               builder.setSound(defaultSoundUri);
+//                NotificationManager notificationManager = (NotificationManager) getActivity(). getSystemService(NOTIFICATION_SERVICE);
+//                notificationManager.notify(1, builder.build());
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
-        if (value!=null) {
-            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity())
-                    .setSmallIcon(R.drawable.ic_home)
-                    .setContentTitle("FCM Message")
-                    .setContentText(value)
-                    .setAutoCancel(true)
-                    .setSound(defaultSoundUri);
 
-
-            NotificationManager notificationManager =
-                    (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-
-            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-        }
+//        if (value!=null) {
+//            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity())
+//                    .setSmallIcon(R.drawable.ic_home)
+//                    .setContentTitle("FCM Message")
+//                    .setContentText(value)
+//                    .setAutoCancel(true)
+//                    .setSound(defaultSoundUri);
+//
+//
+//            NotificationManager notificationManager =
+//                    (NotificationManager) getActivity().getSystemService(NOTIFICATION_SERVICE);
+//
+//            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+//        }
     }
 
     @Override

@@ -36,6 +36,7 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
         startService(new Intent(this, MyService.class));
 
         mprogressBar = (ProgressBar) findViewById(R.id.progressBar);
