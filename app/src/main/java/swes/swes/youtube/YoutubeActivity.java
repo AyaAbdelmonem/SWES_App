@@ -1,6 +1,7 @@
 package swes.swes.youtube;
 
 import android.content.res.Configuration;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -127,7 +128,13 @@ public class YoutubeActivity extends YouTubeBaseActivity implements
         Toast.makeText(getApplicationContext(),"Press back again to exit",Toast.LENGTH_LONG).show();
         if (backpressed>1)
         {super.onBackPressed();}
+        new Handler().postDelayed(new Runnable() {
 
+            @Override
+            public void run() {
+                backpressed=0;
+            }
+        }, 2000);
     }
 
     @Override //reconfigure display properties on screen rotation
