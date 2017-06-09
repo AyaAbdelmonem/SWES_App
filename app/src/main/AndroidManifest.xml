@@ -5,6 +5,7 @@
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -80,11 +81,25 @@
 
         <activity android:name=".activity.LevelsActivity" />
         <activity android:name=".activity.LessonActivity" />
-        <activity android:name=".PostsFeature.PostsMainActivity"
-            android:parentActivityName=".activity.MainActivity"
-            />
+        <activity
+            android:name=".PostsFeature.PostsMainActivity"
+            android:parentActivityName=".activity.MainActivity" />
         <activity android:name=".PostsFeature.PostDetailActivity" />
-        <activity android:name=".PostsFeature.NewPostActivity"></activity>
+        <activity android:name=".PostsFeature.NewPostActivity" />
+        <activity
+            android:name=".activity.UserAccountActivity"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity
+            android:name=".activity.OldPasswordActivity"
+            android:parentActivityName=".activity.UserAccountActivity" />
+        <activity
+            android:name=".activity.NewPasswordActivity"
+            android:parentActivityName=".activity.OldPasswordActivity" />
+
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

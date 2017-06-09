@@ -15,8 +15,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import swes.swes.R;
+import swes.swes.classes.Student;
 
 public class SiginUpActivity extends AppCompatActivity {
 
@@ -25,14 +28,22 @@ public class SiginUpActivity extends AppCompatActivity {
     private Button  btnSignUp;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
+    private FirebaseDatabase database;
+      private DatabaseReference myRef;
+        private Student temp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout. activity_sigin_up);
 
-
+        //Get Firebase instance
+        database = FirebaseDatabase.getInstance();
+              //Get Firebase users reference
+                      myRef = database.getReference(getString(R.string.fb_users));
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
+        temp = new Student();
+
 
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
         inputEmail = (EditText) findViewById(R.id.email);
@@ -47,7 +58,7 @@ public class SiginUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = inputEmail.getText().toString().trim();
+                final String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
@@ -80,6 +91,12 @@ public class SiginUpActivity extends AppCompatActivity {
                                     Toast.makeText(SiginUpActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+                                 //   startActivity(new Intent(SiginUpActivity.this, SiginInActivity.class));
+                                  //  finish();
+                                    temp.setName(inputName.getText().toString());
+                                    temp.setEmail(email);
+                                    myRef.child(auth.getCurrentUser().getUid().toString()).setValue(temp);
+
                                     startActivity(new Intent(SiginUpActivity.this, SiginInActivity.class));
                                     finish();
                                 }

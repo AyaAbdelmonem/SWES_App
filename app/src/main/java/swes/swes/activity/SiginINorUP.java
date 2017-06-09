@@ -24,12 +24,12 @@ public class SiginINorUP extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
 
-      CheckNetwork checkNetwork =  CheckNetwork.getInstance();
-        checkNetwork.setContext(getApplicationContext());
-        boolean network= checkNetwork.isNetworkAvailable();
-if (!network){
-    Toast.makeText(this,"Check internet connection",Toast.LENGTH_SHORT).show();
-}
+//      CheckNetwork checkNetwork =  CheckNetwork.getInstance();
+//        checkNetwork.setContext(getApplicationContext());
+//        boolean network= checkNetwork.isNetworkAvailable();
+//if (!network){
+//    Toast.makeText(this,"Check internet connection",Toast.LENGTH_SHORT).show();
+//}
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(SiginINorUP.this, MainActivity.class));
             finish();

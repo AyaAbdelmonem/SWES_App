@@ -6,7 +6,7 @@
         <item name="android:windowBackground">@color/aya3</item>
         <item name="colorPrimary">@color/aya2</item>
         <item name="colorPrimaryDark">@color/aya2</item>
-        <item name="colorAccent">@color/reda200</item>
+        <item name="colorAccent">@color/aya1</item>
         <item name="android:itemBackground">@color/aya3</item>
         <item name ="android:actionMenuTextColor">@color/aya2</item>
         <item name="android:textColor">@color/aya2</item>

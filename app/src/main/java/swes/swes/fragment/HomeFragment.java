@@ -1,41 +1,60 @@
 package swes.swes.fragment;
 
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import swes.swes.Adapters.CourseDetailsAdapter;
 import swes.swes.Adapters.HomeGridViewAdapter;
 import swes.swes.Models.NotificationModel;
 import swes.swes.activity.LevelsActivity;
 import swes.swes.R;
+import swes.swes.classes.CourseInfo;
+import swes.swes.classes.Ref;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +69,20 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private StorageReference mStorageRef;
+    private CourseInfo courseInfo = new CourseInfo();
+       private ImageView iv_course_pic;
+       private TextView tv_desc;
+        private TextView tv_desc_title;
+        private TextView tv_pre_title;
+        private ListView lv_prereq;
+        private SwipeRefreshLayout swipeRefreshLayout;
+        DatabaseReference ref;
+        ProgressDialog progressDialog ;
+
+                ArrayList<Map<String, String>> prerequiste = new ArrayList<>();
+       private GoogleApiClient client;
 
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -130,20 +163,41 @@ public class HomeFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_home, container, false);
 
 
-        Button Goto_course_button =(Button) view.findViewById(R.id.gotoCourse_button);
+//        Button Goto_course_button =(Button) view.findViewById(R.id.gotoCourse_button);
+//
+//        Goto_course_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(),LevelsActivity.class);
+//                getActivity().startActivity(intent);
+//            }
+//        });
 
-        Goto_course_button.setOnClickListener(new View.OnClickListener() {
+
+        database = FirebaseDatabase.getInstance();
+        final ViewGroup header = (ViewGroup) inflater.inflate(R.layout.course_lv_header, null, false);
+        lv_prereq = (ListView) view.findViewById(R.id.lv_prereq);
+        lv_prereq.addHeaderView(header, null, false);
+        ref = database.getReference(getString(R.string.fb_course_data));
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        iv_course_pic = (ImageView) view.findViewById(R.id.iv_course_pic);
+        tv_desc = (TextView)view. findViewById(R.id.tv_course_desc);
+        tv_desc_title = (TextView)  view.findViewById(R.id.tv_course_desc_title);
+        tv_pre_title = (TextView)  view.findViewById(R.id.tv_course_prereq);
+        swipeRefreshLayout = (SwipeRefreshLayout)  view.findViewById(R.id.swipe_refresh_layout);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+
+        lv_prereq.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),LevelsActivity.class);
-                getActivity().startActivity(intent);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO: put url of book for each prerequisite
+
             }
         });
-
-
-
-
-
+        fetchResults();
 
         return view;
     }
@@ -227,6 +281,54 @@ public class HomeFragment extends Fragment {
 
 
         ll.addView(bmb, params);
+
+    }
+    void fetchResults() {
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // get course info
+                courseInfo.setPhoto(dataSnapshot.child(getString(R.string.fb_course_photo)).getValue(String.class));
+                courseInfo.setDesc(dataSnapshot.child(getString(R.string.fb_course_desc)).getValue(String.class));
+                DataSnapshot snapshot = dataSnapshot.child(getString(R.string.fb_prerequiste));
+                //get prerequiste
+                GenericTypeIndicator<ArrayList<Ref>> t = new GenericTypeIndicator<ArrayList<Ref>>() {
+                };
+                ArrayList<Ref> read_list = snapshot.getValue(t);
+                courseInfo.setPrerequisets(read_list);
+                Log.d("FIREBASETEST", "Value is: " + courseInfo.getPrerequisets().size());
+                // get photo download uri
+                mStorageRef.child(courseInfo.getPhoto()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // display photo
+                        Picasso.with(getContext()).load(uri).fit().centerCrop().into(iv_course_pic);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+                CourseDetailsAdapter detailAdapter = new CourseDetailsAdapter(getContext(), courseInfo);
+                lv_prereq.setAdapter(detailAdapter);
+                // set texts of text views
+                tv_desc.setText(courseInfo.getDesc());
+                tv_desc_title.setText(getString(R.string.course_desc));
+                tv_pre_title.setText(getString(R.string.course_prereq));
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("FIREBASETEST", "Failed to read value.", error.toException());
+            }
+        });
+
+
+
 
     }
 }

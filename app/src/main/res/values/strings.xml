@@ -86,4 +86,29 @@
     <string name="heading_recent">Recent</string>
     <string name="heading_my_posts">My Posts</string>
     <string name="heading_my_top_posts">My Top Posts</string>
+
+    <string name="course_desc">Course Description</string>
+    <string name="course_prereq">Course prerequisites</string>
+    <!--intent extras-->
+    <string name="old_password">oldPassword</string>
+    <!--content descriptions-->
+    <string name="up">Up button</string>
+    <!--toast message -->
+    <string name="upload_msg_suc">The photo has been updated successfully</string>
+    <string name="upload_msg_fail">Sorry , The photo has not uploaded</string>
+    <string name="load_msg_fail">Sorry, the photo is not loaded</string>
+    <string name="info_changed_msg_suc">Your information has been changed successfully</string>
+    <string name="wrong_password">Sorry, you entered wrong password</string>
+    <string name="change_password_suc">Your password has changed successfully</string>
+    <string name="invalid_password">Enter more than 5 characters or digits</string>
+    <!--fire base keys -->
+    <string name="fb_course_data" translatable="false">course_data</string>
+    <string name="fb_course_desc" translatable="false">over_view</string>
+    <string name="fb_course_photo" translatable="false">photo</string>
+    <string name="fb_prerequiste" translatable="false">prerequiste</string>
+    <string name="fb_users" translatable="false">students</string>
+    <string name="fb_users_name" translatable="false">name</string>
+    <string name="fb_users_email" translatable="false">email</string>
+    <string name="fb_users_pp" translatable="false">StudentPicture</string>
+    <string name="fb_pp_folder" translatable="false">profilePics</string>
 </resources>

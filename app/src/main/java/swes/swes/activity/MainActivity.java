@@ -45,6 +45,7 @@ import java.util.List;
 import swes.swes.Models.FAQ;
 import swes.swes.PostsFeature.PostsMainActivity;
 import swes.swes.R;
+import swes.swes.classes.Student;
 import swes.swes.fragment.FAQFragment;
 import swes.swes.fragment.HomeFragment;
 import swes.swes.fragment.RefrencesFragment;
@@ -66,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FloatingActionButton fab;
 
+
+    private  String uid;
+       private Student student;
+    private  DatabaseReference myRef ;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
     // urls to load navigation header background image
@@ -108,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
 
         rt = SettingsActivity.theme;
 
+        if (auth.getCurrentUser() != null) {
+            uid=auth.getCurrentUser().getUid();
+
+                }
+
         if (SettingsActivity.theme == 1) {
             setTheme(R.style.DarkAppTheme);
         }
@@ -134,16 +145,21 @@ public class MainActivity extends AppCompatActivity {
         txtName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,UserAccountActivity.class);
+                               startActivity(intent);
 
-                Toast.makeText(getApplicationContext(),"Clickable Text",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Clickable Text",Toast.LENGTH_SHORT).show();
             }
         });
 
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Clickable Profile Image",Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getApplicationContext(),"Clickable Profile Image",Toast.LENGTH_SHORT).show();
 
+                Intent intent = new Intent(MainActivity.this,UserAccountActivity.class);
+                                startActivity(intent);                                                       Toast.
+                        makeText(getApplicationContext(),"Clickable Profile Image",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -156,8 +172,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Start Course", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this,LevelsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -186,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
             txtName.setText(auth.getCurrentUser().getEmail());
 
         }
+        getCurrentStudent();
        // txtWebsite.setText("SWESAPP");
 
         // loading header background image
@@ -528,6 +547,31 @@ public class MainActivity extends AppCompatActivity {
 
         //progressDialog.dismiss();
     }
+
+    public Student getCurrentStudent(){
+        final  Student s = new Student();
+        myRef = database.getReference(getString(R.string.fb_users));
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+                s.setEmail(dataSnapshot.child(uid).child(getString(R.string.fb_users_email)).getValue(String.class));
+                s.setName(dataSnapshot.child(uid).child(getString(R.string.fb_users_name)).getValue(String.class));
+                txtName.setText(s.getName());
+                Log.d("Firebaseclass", "Value is: " + s.getName());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Firebaseclass", "Failed to read value.", error.toException());
+            }
+        });
+        return s;
+    }
+
 
 
 

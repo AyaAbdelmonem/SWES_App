@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import swes.swes.Models.FAQ;
+import swes.swes.MyService;
 import swes.swes.R;
 
 public class SplashScreen extends Activity {
@@ -35,6 +36,7 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        startService(new Intent(this, MyService.class));
 
         mprogressBar = (ProgressBar) findViewById(R.id.progressBar);
         mprogressBar.setVisibility(View.VISIBLE);
