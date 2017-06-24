@@ -1,6 +1,5 @@
 package swes.swes.fragment;
 
-import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -46,18 +43,12 @@ import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import swes.swes.Adapters.CourseDetailsAdapter;
-import swes.swes.Adapters.HomeGridViewAdapter;
-import swes.swes.Models.NotificationModel;
-import swes.swes.activity.LevelsActivity;
 import swes.swes.R;
 import swes.swes.classes.CourseInfo;
 import swes.swes.classes.Ref;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -132,41 +123,41 @@ public class HomeFragment extends Fragment {
 //// trying push notification 
 
 
-//        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("CC");
-//        final Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//
-//        builder = new NotificationCompat.Builder(getActivity());
-//        mRootRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-////                builder.setSmallIcon(R.mipmap.ic_launcher);
-////                builder.setContentTitle("Firebase Push Notification");
-////                builder.setContentText(s);
-////               builder.setSound(defaultSoundUri);
-////                NotificationManager notificationManager = (NotificationManager) getActivity(). getSystemService(NOTIFICATION_SERVICE);
-////                notificationManager.notify(1, builder.build());
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("CC");
+        final Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        builder = new NotificationCompat.Builder(getActivity());
+        mRootRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                builder.setSmallIcon(R.mipmap.ic_launcher);
+//                builder.setContentTitle("Firebase Push Notification");
+//                builder.setContentText(s);
+//               builder.setSound(defaultSoundUri);
+//                NotificationManager notificationManager = (NotificationManager) getActivity(). getSystemService(NOTIFICATION_SERVICE);
+//                notificationManager.notify(1, builder.build());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 //        if (value!=null) {
@@ -348,6 +339,7 @@ public class HomeFragment extends Fragment {
                 tv_desc_title.setText(getString(R.string.course_desc));
                 tv_pre_title.setText(getString(R.string.course_prereq));
                 progressDialog.dismiss();
+
             }
 
             @Override
@@ -357,7 +349,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        lv_prereq.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
 
+                Uri webpage = Uri.parse(courseInfo.getPrerequisets().get(position-1).getUrl());
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                startActivity(webIntent);
+            }
+        });
 
 
     }

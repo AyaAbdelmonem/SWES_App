@@ -1,21 +1,21 @@
 package swes.swes.classes;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * Created by Sameh on 3/24/2017.
  */
 
-public class Lesson {
+public class Lesson implements Serializable {
 
     private int Lesson_number;
     private  String Lesson_name;
     private float TotalRate;
     private int RateCount;
-    private Test test;
-    private List<Video> videos;
-    private List<Refrences> refrences;
-    private  List<Comment> comments;
+    private Test Test;
+//    private List<Video> videos;
+//    private List<Refrences> refrences;
+//    private  List<Comment> comments;
 
     public int getLesson_number() {
         return Lesson_number;
@@ -50,34 +50,34 @@ public class Lesson {
     }
 
     public Test getTest() {
-        return test;
+        return Test;
     }
 
     public void setTest(Test test) {
-        this.test = test;
+        this.Test = test;
     }
 
-    public List<Video> getVideos() {
-        return videos;
-    }
-
-    public void setVideos(List<Video> videos) {
-        this.videos = videos;
-    }
-
-    public List<Refrences> getRefrences() {
-        return refrences;
-    }
-
-    public void setRefrences(List<Refrences> refrences) {
-        this.refrences = refrences;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
+//    public List<Video> getVideos() {
+//        return videos;
+//    }
+//
+//    public void setVideos(List<Video> videos) {
+//        this.videos = videos;
+//    }
+//
+//    public List<Refrences> getRefrences() {
+//        return refrences;
+//    }
+//
+//    public void setRefrences(List<Refrences> refrences) {
+//        this.refrences = refrences;
+//    }
+//
+//    public List<Comment> getComments() {
+//        return comments;
+//    }
+//
+//    public void setComments(List<Comment> comments) {
+//        this.comments = comments;
+//    }
 }

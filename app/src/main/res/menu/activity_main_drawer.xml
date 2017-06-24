@@ -22,12 +22,12 @@
 
         <item
             android:id="@+id/nav_subscribion"
-            android:icon="@drawable/ic_language"
+            android:icon="@drawable/ic_subscribe"
             android:title="Subscribition" />
 
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_language"
+            android:icon="@drawable/ic_logout"
             android:title="Logout"
             />
     </group>
@@ -46,9 +46,7 @@
             <item
                 android:id="@+id/nav_about_us"
                 android:title="@string/nav_about_us" />
-            <item
-                android:id="@+id/share_SocialMedia"
-                android:title="@string/share_SM" />
+
         </menu>
     </item>
 

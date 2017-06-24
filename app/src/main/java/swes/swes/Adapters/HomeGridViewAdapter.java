@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
@@ -16,8 +17,14 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import swes.swes.R;
 import swes.swes.activity.LessonActivity;
+import swes.swes.classes.Lesson;
+import swes.swes.classes.Level;
 
 /**
  * Created by Sameh on 4/21/2017.
@@ -28,6 +35,7 @@ public class HomeGridViewAdapter extends BaseAdapter {
     private Context mContext;
 
     private  int Length;
+   List<Level> levels;
    // private View HomeView;
     // Keep all Images in array
     public Integer[] mThumbIds = {
@@ -35,10 +43,11 @@ public class HomeGridViewAdapter extends BaseAdapter {
     };
 
     // Constructor
-    public HomeGridViewAdapter(Context c ,int size){
+    public HomeGridViewAdapter(Context c ,List<Level> levelMap){
         mContext = c;
      //   this.HomeView=HomeView;
-        this.Length=size;
+        this.Length=levelMap.size();
+        levels =levelMap;
     }
 
     @Override
@@ -62,44 +71,96 @@ public class HomeGridViewAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         View grid;
-        LayoutInflater inflater = (LayoutInflater) mContext
+        final LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
 
             grid = new View(mContext);
+            final List<Lesson> lessons = new ArrayList<>();
             grid = inflater.inflate(R.layout.grid_single, null);
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);
-            BoomMenuButton bmb = (BoomMenuButton)grid.findViewById(R.id.grid_bmb);
-            textView.setText("We are at "+ position);
+            BoomMenuButton bmb = (BoomMenuButton) grid.findViewById(R.id.grid_bmb);
+            textView.setText(levels.get(position).getLevelName());
+            for (Map.Entry<String, Lesson> entry : levels.get(position).getLessons().entrySet()) {
+                lessons.add ( entry.getValue());
+            }
 
             bmb.setButtonEnum(ButtonEnum.Ham);
-            bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_4);
+            switch (levels.get(position).getLessons().size()) {
+                case 1:
+                    bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_2);
+                    bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_2);
+                    break;
+                case 2:
+                    bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_3);
+                    bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_3);
+                    break;
+                case 3:
+                    bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_4);
+                    bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_4);
+                    break;
+                case 4:
+                    bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_5);
+                    bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_5);
+                    break;
+                default:
+                    bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_6);
+                    bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_6);
+                    break;
+            }
             bmb.setNormalColor(mContext.getResources().getColor(R.color.aya1));
             bmb.setHighlightedColor(mContext.getResources().getColor(R.color.aya1));
-            bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_4);
             for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
-                HamButton.Builder builder = new HamButton.Builder()
-                        .normalImageRes(R.drawable.ic_home)
-                        .normalText("Butter Doesn't fly!")
-                        .subNormalText("Little butter Doesn't fly, either!")
-                        .listener(new OnBMClickListener() {
-                            @Override
-                            public void onBoomButtonClick(int index) {
-                                // When the boom-button corresponding this builder is clicked.
-                                Toast.makeText(mContext, "Clicked on Index " + index+ " Position "+position, Toast.LENGTH_SHORT).show();
-                                Intent intent =new Intent(mContext, LessonActivity.class);
-                                mContext.startActivity(intent);
-                            }
-                        });
-                bmb.addBuilder(builder);
-            }
-        } else {
-            grid = (View) convertView;
-        }
+                if(i==(bmb.getPiecePlaceEnum().pieceNumber()-1)){
+                    HamButton.Builder builder = new HamButton.Builder()
+                            .normalImageRes(R.drawable.ic_casestudy)
+                            .normalText("casestudy")
+                            .listener(new OnBMClickListener() {
+                                @Override
+                                public void onBoomButtonClick(int index) {
+                                    // When the boom-button corresponding this builder is clicked.
+                                    //Toast.makeText(mContext, "Clicked on Index " + index + " Position " + position, Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(mContext, LessonActivity.class);
+                                    Gson gson = new Gson();
+                                    String casestudy = gson.toJson(levels.get(position).getCaseStudy());
+                                    intent.putExtra(mContext.getString(R.string.lesson_extra),casestudy);
+                                    //mContext.startActivity(intent);
+                                }
+                            });
+                    bmb.addBuilder(builder);
+                }
+                else {
 
-        return grid;
+                    final int finalI = i;
+                    HamButton.Builder builder = new HamButton.Builder()
+                                .normalImageRes(R.drawable.swes_ic_white)
+                                .normalText(lessons.get(i).getLesson_name())
+                                .listener(new OnBMClickListener() {
+                                    @Override
+                                    public void onBoomButtonClick(int index) {
+                                        // When the boom-button corresponding this builder is clicked.
+                                        Toast.makeText(mContext, "Clicked on Index " + index + " Position " + position, Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(mContext, LessonActivity.class);
+                                        Gson gson = new Gson();
+                                        String lessonJson = gson.toJson(lessons.get(finalI));
+                                        intent.putExtra(mContext.getString(R.string.lesson_extra),lessonJson);
+                                        mContext.startActivity(intent);
+                                    }
+
+                                });
+                        bmb.addBuilder(builder);
+
+                }
+                }
+
+            }else{
+                grid = (View) convertView;
+            }
+
+            return grid;
+        }
 
     }
 
-}
+

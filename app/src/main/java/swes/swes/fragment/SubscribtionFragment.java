@@ -4,19 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import swes.swes.R;
+
+import static swes.swes.R.id.checkBox_casestudies;
+import static swes.swes.R.id.checkBox_lessons;
+import static swes.swes.R.id.checkBox_levels;
+import static swes.swes.R.id.checkBox_tests;
+import static swes.swes.R.id.checkBox_videos;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +44,11 @@ public class SubscribtionFragment extends Fragment {
 
     String Event=null;
     Spinner spinner;
+    CheckBox checkBox_v;
+    CheckBox checkBox_c;
+    CheckBox checkBox_les;
+    CheckBox checkBox_lev;
+    CheckBox checkBox_t;
 
     public SubscribtionFragment() {
         // Required empty public constructor
@@ -95,39 +104,50 @@ public class SubscribtionFragment extends Fragment {
         }
         // [END handle_data_extras]
 
-      spinner  =(Spinner)view.findViewById(R.id.spinner);
-        String[] choices=new String[]{"Videos","Case Studies","Levels","Lessons","Tests","Posts&Comments","All"};
-        ArrayAdapter<String> SpinnerArrayAdapt= new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, choices);
-        SpinnerArrayAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(SpinnerArrayAdapt);
 
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Event = spinner.getSelectedItem().toString();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        checkBox_c=(CheckBox)view.findViewById(checkBox_casestudies) ;
+        checkBox_les=(CheckBox)view.findViewById(checkBox_lessons) ;
+        checkBox_lev=(CheckBox)view.findViewById(checkBox_levels) ;
+        checkBox_t=(CheckBox)view.findViewById(checkBox_tests) ;
+        checkBox_v=(CheckBox)view.findViewById(checkBox_videos) ;
 
         Button subscribeButton = (Button) view.findViewById(R.id.subscribeButton);
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Event!=null)
-                // [START subscribe_topics]
-                {  FirebaseMessaging.getInstance().subscribeToTopic(Event);
-                // [END subscribe_topics]
+                if(checkBox_v.isChecked()){
+                    // [START subscribe_topics]
+                    FirebaseMessaging.getInstance().subscribeToTopic(checkBox_v.getText().toString());
+                    // [END subscribe_topics]
+                }
+                if(checkBox_c.isChecked()){
+                    // [START subscribe_topics]
+                    FirebaseMessaging.getInstance().subscribeToTopic("CaseStudies");
+                    // [END subscribe_topics]
+                }
+                 if(checkBox_lev.isChecked()){
+                    // [START subscribe_topics]
+                    FirebaseMessaging.getInstance().subscribeToTopic("Levels");
+                    // [END subscribe_topics]
+                }
+                if(checkBox_les.isChecked()){
+                    // [START subscribe_topics]
+                    FirebaseMessaging.getInstance().subscribeToTopic("Lessons");
+                    // [END subscribe_topics]
+                }
+                if(checkBox_t.isChecked()){
+                    // [START subscribe_topics]
+                    FirebaseMessaging.getInstance().subscribeToTopic(checkBox_t.getText().toString());
+                    // [END subscribe_topics]
+                }
 
-                // Log and toast
-               // String msg = getString(R.string.msg_subscribed);
-               // Log.d(TAG, msg);
-                Toast.makeText(getActivity(), Event, Toast.LENGTH_SHORT).show();}
+                if(!checkBox_t.isChecked()&&!checkBox_les.isChecked()&&!checkBox_lev.isChecked()&&!checkBox_v.isChecked()&&!checkBox_c.isChecked()){
+                    Toast.makeText(getActivity(), "Please, Choose an event ", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                Toast.makeText(getActivity(), "Your subscription events are saved ", Toast.LENGTH_SHORT).show();}
+
 
             }
         });

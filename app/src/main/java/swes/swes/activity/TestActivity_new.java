@@ -4,6 +4,7 @@ package swes.swes.activity;//package swes.swes.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +26,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.Vector;
 
 import swes.swes.R;
+import swes.swes.classes.Test;
 
 public class TestActivity_new extends AppCompatActivity {
     private ViewPager pager;
@@ -37,6 +42,16 @@ public class TestActivity_new extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_new);
 
+
+       String test_string= getIntent().getStringExtra("test");
+        Test test =new Test();
+        Gson gson =new Gson();
+        test=(Test) gson.fromJson(test_string,Test.class);
+
+        Log.d("T111111111111",test.getQuestions().get(0).getQuestion());
+
+
+
         pager = (ViewPager)findViewById(R.id.container);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -44,9 +59,11 @@ public class TestActivity_new extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String[] data = {"page1", "page2", "page3", "page4", "page5", "page6"};
+        String[] data = {test.getQuestions().get(0).getQuestion(),
+                test.getQuestions().get(1).getQuestion()
+        };
 
-        adapter = new MyFragmentAdapter(getSupportFragmentManager(), 6, this, data);
+        adapter = new MyFragmentAdapter(getSupportFragmentManager(), 2, this, data);
         pager.setAdapter(adapter);
 
 //        ((Button)findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {

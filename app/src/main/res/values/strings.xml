@@ -111,7 +111,17 @@
     <string name="fb_users_email" translatable="false">email</string>
     <string name="fb_users_pp" translatable="false">StudentPicture</string>
     <string name="fb_pp_folder" translatable="false">profilePics</string>
-    <string name="title_activity_test_new">TestActivity_new</string>
+    <string name="fb_tests_node" translatable="false">Tests</string>
+    <string name="fb_levels_node" translatable="false">Levels</string>
+    <string name="fb_lessons_node" translatable="false">Lessons</string>
+    <!--Subscription events-->
+    <string name="videos">Videos</string>
+    <string name="caseStudies">Case Studies</string>
+    <string name="levels">Levels</string>
+    <string name="lessons">Lessons</string>
+    <string name="tests">Tests</string>
     <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_test_new">TestActivity_new</string>
+    <!--intent extras-->
+    <string name="lesson_extra" translatable="false">Lesson</string>
 </resources>

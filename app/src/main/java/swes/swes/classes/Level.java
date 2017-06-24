@@ -1,25 +1,19 @@
 package swes.swes.classes;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Created by Sameh on 3/24/2017.
  */
 
-public class Level {
+public class Level implements Serializable {
 
-    private List<Lesson> lessons;
+    private Map<String,Lesson> Lessons;
     private  CaseStudy caseStudy;
     private  String LevelName;
     private  int LevelNumber;
 
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
-    }
 
     public CaseStudy getCaseStudy() {
         return caseStudy;
@@ -43,5 +37,14 @@ public class Level {
 
     public void setLevelNumber(int levelNumber) {
         LevelNumber = levelNumber;
+    }
+
+
+    public Map<String, Lesson> getLessons() {
+        return Lessons;
+    }
+
+    public void setLessons(Map<String, Lesson> lessons) {
+        Lessons = lessons;
     }
 }

@@ -1,14 +1,12 @@
 package swes.swes.activity;
 
-import android.app.AlertDialog;
-import android.app.Notification;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -20,7 +18,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,8 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,10 +34,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import swes.swes.Models.FAQ;
 import swes.swes.PostsFeature.PostsMainActivity;
@@ -51,12 +49,12 @@ import swes.swes.fragment.HomeFragment;
 import swes.swes.fragment.RefrencesFragment;
 import swes.swes.fragment.SettingsFragment;
 import swes.swes.fragment.SubscribtionFragment;
-import swes.swes.other.CircleTransform;
+import swes.swes.other.CircleTransformation;
 
 public class MainActivity extends AppCompatActivity {
 
 
-  public  static int rt;
+    public static int rt;
     ArrayList<FAQ> read_list;
 
     private NavigationView navigationView;
@@ -68,9 +66,10 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
 
 
-    private  String uid;
-       private Student student;
-    private  DatabaseReference myRef ;
+    private String uid;
+    private Student student;
+    private DatabaseReference myRef;
+    private StorageReference mStorageRef;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_Refrence = "refrences";
     private static final String TAG_Subscribtion = "subscribtion";
     private static final String TAG_SETTINGS = "settings";
-    private  static  final String TAG_LOGOUT= "logout";
+    private static final String TAG_LOGOUT = "logout";
     public static String CURRENT_TAG = TAG_HOME;
 
     // toolbar titles respected to selected nav menu item
@@ -115,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
         rt = SettingsActivity.theme;
 
         if (auth.getCurrentUser() != null) {
-            uid=auth.getCurrentUser().getUid();
+            uid = auth.getCurrentUser().getUid();
 
-                }
+        }
 
         if (SettingsActivity.theme == 1) {
             setTheme(R.style.DarkAppTheme);
@@ -133,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
 
-
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
         txtName = (TextView) navHeader.findViewById(R.id.name);
@@ -145,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
         txtName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,UserAccountActivity.class);
-                               startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, UserAccountActivity.class);
+                startActivity(intent);
 
                 //Toast.makeText(getApplicationContext(),"Clickable Text",Toast.LENGTH_SHORT).show();
             }
@@ -155,15 +153,13 @@ public class MainActivity extends AppCompatActivity {
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  Toast.makeText(getApplicationContext(),"Clickable Profile Image",Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getApplicationContext(),"Clickable Profile Image",Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(MainActivity.this,UserAccountActivity.class);
-                                startActivity(intent);                                                       Toast.
-                        makeText(getApplicationContext(),"Clickable Profile Image",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, UserAccountActivity.class);
+                startActivity(intent);
+//                Toast.makeText(getApplicationContext(),"Clickable Profile Image",Toast.LENGTH_SHORT).show();
             }
         });
-
-
 
 
         // load toolbar titles from string resources
@@ -174,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Start Course", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                Intent intent = new Intent(MainActivity.this,LevelsActivity.class);
+                Intent intent = new Intent(MainActivity.this, LevelsActivity.class);
                 startActivity(intent);
             }
         });
@@ -205,24 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         getCurrentStudent();
-       // txtWebsite.setText("SWESAPP");
 
-        // loading header background image
-      /*  Glide.with(this).load(urlNavHeaderBg)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgNavHeaderBg);*/
-
-        // Loading profile image
-      /*  Glide.with(this).load(urlProfileImg)
-                .crossFade()
-                .thumbnail(0.5f)
-                .bitmapTransform(new CircleTransform(this))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgProfile);*/
-
-        // showing dot next to notifications label
-       // navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
     }
 
     /***
@@ -254,12 +233,13 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 // update the main content by replacing fragments
                 Fragment fragment = getHomeFragment();
-                if (fragment!=null)
-                {FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
-                fragmentTransaction.commitAllowingStateLoss();}
+                if (fragment != null) {
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                            android.R.anim.fade_out);
+                    fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
+                    fragmentTransaction.commitAllowingStateLoss();
+                }
             }
         };
 
@@ -285,12 +265,12 @@ public class MainActivity extends AppCompatActivity {
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 1:
-                 //FAQ
-               FAQFragment FAQ_fragment = new FAQFragment();
+                //FAQ
+                FAQFragment FAQ_fragment = new FAQFragment();
                 return FAQ_fragment;
-               // Intent i = new Intent(MainActivity.this, FAQActivity.class);
-                //startActivity(i);
-               //return  null;
+            // Intent i = new Intent(MainActivity.this, FAQActivity.class);
+            //startActivity(i);
+            //return  null;
             case 2:
                 // Languagae fragment
                 RefrencesFragment refrencesFragment = new RefrencesFragment();
@@ -305,12 +285,12 @@ public class MainActivity extends AppCompatActivity {
                 SubscribtionFragment subscribtionFragment = new SubscribtionFragment();
                 return subscribtionFragment;
             case 5:
-                  //logout
+                //logout
                 Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
                 FirebaseAuth auth;
                 auth = FirebaseAuth.getInstance();
                 auth.signOut();
-                Intent intent =new Intent(MainActivity.this,SiginINorUP.class);
+                Intent intent = new Intent(MainActivity.this, SiginINorUP.class);
                 startActivity(intent);
                 finish();
 
@@ -375,12 +355,7 @@ public class MainActivity extends AppCompatActivity {
                         drawer.closeDrawers();
                         return true;
 
-                    case R.id.share_SocialMedia:
-                        // launch new intent instead of loading fragment
 
-
-                        drawer.closeDrawers();
-                        return true;
 
                     default:
                         navItemIndex = 0;
@@ -488,7 +463,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }*/
         if (id == R.id.notification) {
-            Intent i = new Intent(MainActivity.this,NotificationActivity.class);
+            Intent i = new Intent(MainActivity.this, NotificationActivity.class);
             startActivity(i);
 
             return true;
@@ -507,9 +482,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
-            return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
     // show or hide the fab
@@ -531,9 +504,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                GenericTypeIndicator<ArrayList<FAQ>> t = new GenericTypeIndicator<ArrayList<FAQ>>() {};
-                  read_list = dataSnapshot.getValue(t);
-                  Log.d("FFFFFFFFFFFFF","FFFFFFFFFFFFF");
+                GenericTypeIndicator<ArrayList<FAQ>> t = new GenericTypeIndicator<ArrayList<FAQ>>() {
+                };
+                read_list = dataSnapshot.getValue(t);
+                Log.d("FFFFFFFFFFFFF", "FFFFFFFFFFFFF");
             }
 
             @Override
@@ -543,24 +517,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-     return read_list;
+        return read_list;
 
         //progressDialog.dismiss();
     }
 
-    public Student getCurrentStudent(){
-        final  Student s = new Student();
+    public void getCurrentStudent() {
         myRef = database.getReference(getString(R.string.fb_users));
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                DataSnapshot snapshot = dataSnapshot.child(uid);
+                Student stu = new Student();
+                stu = snapshot.getValue(Student.class);
 
-                s.setEmail(dataSnapshot.child(uid).child(getString(R.string.fb_users_email)).getValue(String.class));
-                s.setName(dataSnapshot.child(uid).child(getString(R.string.fb_users_name)).getValue(String.class));
-                txtName.setText(s.getName());
-                Log.d("Firebaseclass", "Value is: " + s.getName());
+                txtName.setText(stu.getName());
+                try {
+                    mStorageRef.child(getString(R.string.fb_pp_folder)).child(stu.getStudentPicture()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            Picasso.with(getBaseContext()).load(uri).placeholder(R.drawable.temp_pp).transform(new CircleTransformation()).fit().centerCrop().into(imgProfile);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(MainActivity.this, exception.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+
+                } catch (Exception e) {
+                    Log.d("User P.P", e.getMessage());
+                }
+//                Log.d("Firebaseclass", "Value is: " + stu.getName());
             }
 
             @Override
@@ -569,7 +562,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("Firebaseclass", "Failed to read value.", error.toException());
             }
         });
-        return s;
+
     }
 
 

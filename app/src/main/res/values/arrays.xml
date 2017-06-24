@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="Events">
+        <item>@string/videos</item>
+        <item>@string/caseStudies</item>
+        <item>@string/levels</item>
+        <item>@string/lessons</item>
+        <item>@string/tests</item>
+    </array>
+</resources>

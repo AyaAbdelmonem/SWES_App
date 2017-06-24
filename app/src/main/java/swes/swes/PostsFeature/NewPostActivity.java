@@ -1,10 +1,5 @@
 package swes.swes.PostsFeature;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import swes.swes.R;
-
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
@@ -19,9 +14,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 import java.util.HashMap;
 import java.util.Map;
+
+import swes.swes.R;
+import swes.swes.classes.Student;
 
 public class NewPostActivity extends BaseActivity {
 
@@ -79,12 +76,12 @@ public class NewPostActivity extends BaseActivity {
 
         // [START single_value_read]
         final String userId = getUid();
-        mDatabase.child("users").child(userId).addListenerForSingleValueEvent(
+        mDatabase.child(getResources().getString(R.string.fb_users)).child(userId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user value
-                        User user = dataSnapshot.getValue(User.class);
+                        Student user = dataSnapshot.getValue(Student.class);
 
                         // [START_EXCLUDE]
                         if (user == null) {
@@ -95,7 +92,7 @@ public class NewPostActivity extends BaseActivity {
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             // Write new post
-                            writeNewPost(userId, user.username, title, body);
+                            writeNewPost(userId, user.getName(), title, body);
                         }
 
                         // Finish this Activity, back to the stream

@@ -1,12 +1,9 @@
 package swes.swes.PostsFeature;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import swes.swes.R;
-
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,19 +12,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import swes.swes.R;
+import swes.swes.classes.Student;
+import swes.swes.other.CircleTransformation;
 
 public class PostDetailActivity extends BaseActivity implements View.OnClickListener {
 
@@ -47,6 +53,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private EditText mCommentField;
     private Button mCommentButton;
     private RecyclerView mCommentsRecycler;
+    private static StorageReference mStorageRef =  FirebaseStorage.getInstance().getReference();
+    private ImageView postAuthorPic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +75,10 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         // Initialize Views
         mAuthorView = (TextView) findViewById(R.id.post_author);
+        postAuthorPic=(ImageView)findViewById(R.id.post_author_photo);
         mTitleView = (TextView) findViewById(R.id.post_title);
         mBodyView = (TextView) findViewById(R.id.post_body);
+
         mCommentField = (EditText) findViewById(R.id.field_comment_text);
         mCommentButton = (Button) findViewById(R.id.button_post_comment);
         mCommentsRecycler = (RecyclerView) findViewById(R.id.recycler_comments);
@@ -93,6 +103,24 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                 mAuthorView.setText(post.author);
                 mTitleView.setText(post.title);
                 mBodyView.setText(post.body);
+                try {
+                    mStorageRef.child(getString(R.string.fb_pp_folder)).child((post.uid+"pp")).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            Picasso.with(postAuthorPic.getContext()).load(uri).placeholder(R.drawable.ic_action_account_circle_40).transform(new CircleTransformation()).fit().centerCrop().into(postAuthorPic);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Log.d("Profile pic",exception.getMessage().toString());
+                        }
+                    });
+
+
+                } catch (Exception e) {
+                    Log.d("User P.P", e.getMessage());
+                }
                 // [END_EXCLUDE]
             }
 
@@ -140,13 +168,13 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
     private void postComment() {
         final String uid = getUid();
-        FirebaseDatabase.getInstance().getReference().child("users").child(uid)
+        FirebaseDatabase.getInstance().getReference().child(getResources().getString(R.string.fb_users)).child(uid)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user information
-                        User user = dataSnapshot.getValue(User.class);
-                        String authorName = user.username;
+                        Student user = dataSnapshot.getValue(Student.class);
+                        String authorName = user.getName();
 
                         // Create new comment object
                         String commentText = mCommentField.getText().toString();
@@ -170,12 +198,14 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         public TextView authorView;
         public TextView bodyView;
+        public ImageView profilepic;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
 
             authorView = (TextView) itemView.findViewById(R.id.comment_author);
             bodyView = (TextView) itemView.findViewById(R.id.comment_body);
+            profilepic = (ImageView) itemView.findViewById(R.id.comment_photo);
         }
     }
 
@@ -290,10 +320,29 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         }
 
         @Override
-        public void onBindViewHolder(CommentViewHolder holder, int position) {
+        public void onBindViewHolder(final CommentViewHolder holder, int position) {
             Comment comment = mComments.get(position);
             holder.authorView.setText(comment.author);
             holder.bodyView.setText(comment.text);
+
+            try {
+                mStorageRef.child(holder.profilepic.getContext().getString(R.string.fb_pp_folder)).child((comment.uid+"pp")).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        Picasso.with(holder.profilepic.getContext()).load(uri).placeholder(R.drawable.ic_action_account_circle_40).transform(new CircleTransformation()).fit().centerCrop().into(holder.profilepic);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(holder.profilepic.getContext(), exception.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+            } catch (Exception e) {
+                Log.d("User P.P", e.getMessage());
+            }
         }
 
         @Override

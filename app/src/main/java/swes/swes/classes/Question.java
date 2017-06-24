@@ -11,7 +11,6 @@ public class Question {
     private String question;
     private  int question_number;
     private String RightAnswer;
-    private int RightAnswerIndex;
     private List<String> Answers;
     private Boolean IsRight;
 
@@ -37,14 +36,6 @@ public class Question {
 
     public void setRightAnswer(String rightAnswer) {
         RightAnswer = rightAnswer;
-    }
-
-    public int getRightAnswerIndex() {
-        return RightAnswerIndex;
-    }
-
-    public void setRightAnswerIndex(int rightAnswerIndex) {
-        RightAnswerIndex = rightAnswerIndex;
     }
 
     public List<String> getAnswers() {
