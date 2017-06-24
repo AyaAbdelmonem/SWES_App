@@ -8,12 +8,12 @@
         <item name="colorPrimaryDark">@color/aya2</item>
         <item name="colorAccent">@color/aya1</item>
         <item name="android:itemBackground">@color/aya3</item>
-        <item name ="android:actionMenuTextColor">@color/aya2</item>
+        <item name="android:actionMenuTextColor">@color/aya2</item>
         <item name="android:textColor">@color/aya2</item>
-        <item name ="android:textColorLink">@color/aya2</item>
-        <item name ="android:textColorHint">@color/aya2</item>
-        <item name ="android:textColorSecondary">@color/aya2</item>
-        <item name ="android:textColorPrimary">@color/aya2</item>
+        <item name="android:textColorLink">@color/aya2</item>
+        <item name="android:textColorHint">@color/aya2</item>
+        <item name="android:textColorSecondary">@color/aya2</item>
+        <item name="android:textColorPrimary">@color/aya2</item>
         <item name="colorControlNormal">#ffff</item>
 
     </style>
@@ -26,26 +26,26 @@
         <item name="colorPrimaryDark">@color/blue700</item>
         <item name="colorAccent">@color/reda200</item>
         <item name="android:textColor">@color/white</item>
-        <item name ="android:actionMenuTextColor">@color/white</item>
-        <item name ="android:textColorLink">@color/white</item>
-        <item name ="android:textColorHint">@color/white</item>
-        <item name ="android:textColorSecondary">@color/white</item>
-        <item name ="android:textColorPrimary">@color/white</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="android:textColorLink">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="android:itemBackground">@color/darkgrey</item>
 
     </style>
 
     <style name="AppTheme.NoActionBar">
 
-    <item name="windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
 
-    <item name="windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
 
-</style>
+    </style>
 
-    <style parent="ThemeOverlay.AppCompat.Dark.ActionBar" name="AppTheme.AppBarOverlay"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style parent="ThemeOverlay.AppCompat.Light" name="AppTheme.PopupOverlay"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
     <style name="TutorialTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -59,16 +59,13 @@
 
 
     <style name="round_edged_button">
-         <item name="android:bottomLeftRadius">20dp</item>
+        <item name="android:bottomLeftRadius">20dp</item>
         <item name="android:bottomRightRadius">20dp</item>
         <item name="android:topLeftRadius">20dp</item>
         <item name="android:topRightRadius">20dp</item>
 
 
     </style>
-
- 
-
 
 
 </resources>

@@ -2,6 +2,8 @@ package swes.swes.activity;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +39,13 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        startService(new Intent(this, MyService.class));
+if (!isMyServiceRunning(MyService.class))
+
+{   startService(new Intent(this, MyService.class));
+Log.d("sssssssssssssss","Service is off ");
+}
+        else Log.d("sssssssssssssss","Service is ON ");
+
 
         mprogressBar = (ProgressBar) findViewById(R.id.progressBar);
         mprogressBar.setVisibility(View.VISIBLE);
@@ -93,6 +101,14 @@ public class SplashScreen extends Activity {
         progressBar.setVisibility(View.VISIBLE);*/
 
     }
-
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

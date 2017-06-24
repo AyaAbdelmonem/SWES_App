@@ -132,41 +132,41 @@ public class HomeFragment extends Fragment {
 //// trying push notification 
 
 
-        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("CC");
-        final Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        builder = new NotificationCompat.Builder(getActivity());
-        mRootRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                builder.setSmallIcon(R.mipmap.ic_launcher);
-//                builder.setContentTitle("Firebase Push Notification");
-//                builder.setContentText(s);
-//               builder.setSound(defaultSoundUri);
-//                NotificationManager notificationManager = (NotificationManager) getActivity(). getSystemService(NOTIFICATION_SERVICE);
-//                notificationManager.notify(1, builder.build());
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("CC");
+//        final Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//
+//        builder = new NotificationCompat.Builder(getActivity());
+//        mRootRef.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+////                builder.setSmallIcon(R.mipmap.ic_launcher);
+////                builder.setContentTitle("Firebase Push Notification");
+////                builder.setContentText(s);
+////               builder.setSound(defaultSoundUri);
+////                NotificationManager notificationManager = (NotificationManager) getActivity(). getSystemService(NOTIFICATION_SERVICE);
+////                notificationManager.notify(1, builder.build());
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
 //        if (value!=null) {

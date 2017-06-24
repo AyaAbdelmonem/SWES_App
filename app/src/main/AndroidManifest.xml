@@ -99,7 +99,20 @@
         <service
             android:name=".MyService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".activity.TestActivity" />
+        <activity
+            android:name=".activity.TestActivity_new"
+            android:label="@string/title_activity_test_new"
+            android:parentActivityName=".activity.LessonActivity"
+            android:theme="@style/AppTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="swes.swes.activity.LessonActivity" />
+        </activity>
     </application>
 
 </manifest>
