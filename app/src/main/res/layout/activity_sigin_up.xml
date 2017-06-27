@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@color/background_SiginUP"
+            android:background="@color/white"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin">
@@ -26,9 +26,17 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="30dp"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_gravity="center"
+                android:src="@drawable/cap"
+                android:layout_marginTop="0dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SWES"
+                android:textStyle="bold"
+                android:textColor="#724952"
+                android:textSize="30sp"
+                android:fontFamily="cursive"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -38,11 +46,13 @@
                     android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:hint="username"
                     android:inputType="text"
                     android:maxLines="1"
+                    android:fontFamily="serif"
                     android:singleLine="true"
-                    android:textColor="@android:color/white" />
+                    android:textColor="#B36678" />
 
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
@@ -54,10 +64,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="E-mail"
+                    android:fontFamily="serif"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@android:color/white" />
+                    android:textColor="#B36678" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -71,12 +82,14 @@
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="true"
                     android:hint="Password"
+                    android:fontFamily="serif"
                     android:imeActionId="@+id/login"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@android:color/white" />
+                    android:textColor="#B36678"
+                    />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -85,11 +98,23 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@color/button_siginUP"
+                android:layout_marginTop="25dp"
+                android:background="#724952"
                 android:text="Sigin Up"
-                android:textColor="@android:color/black"
+                android:textColor="#ffffff"
                 android:textStyle="bold" />
+            <Button
+                android:id="@+id/sign_me_in"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:background="@null"
+                android:text="Already Registered ? Sign in !"
+                android:textAllCaps="false"
+                android:textColor="#724952"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="0dp"
+                />
 
 
             <!-- Link to Login Screen -->

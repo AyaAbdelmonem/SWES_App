@@ -1,27 +1,24 @@
 package swes.swes.activity;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.google.android.youtube.player.internal.q;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
-import swes.swes.Models.FAQ;
 import swes.swes.MyService;
 import swes.swes.R;
+
+import static android.content.ContentValues.TAG;
+//import static com.google.android.gms.internal.zzt.TAG;
 
 public class SplashScreen extends Activity {
 
@@ -29,34 +26,33 @@ public class SplashScreen extends Activity {
     private static int SPLASH_TIME_OUT = 3000;
 
 
-
+    Boolean value;
+     private FirebaseAuth auth;
+    private DatabaseReference mDatabase;
     //private ProgressBar progressBar;
 
-    ProgressBar mprogressBar;
+  //  ProgressBar mprogressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-if (!isMyServiceRunning(MyService.class))
-
-{   startService(new Intent(this, MyService.class));
-Log.d("sssssssssssssss","Service is off ");
-}
-        else Log.d("sssssssssssssss","Service is ON ");
-
-
-        mprogressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mprogressBar.setVisibility(View.VISIBLE);
-        mprogressBar.getIndeterminateDrawable().setColorFilter(getResources()
-                .getColor(R.color.aya2)
-                , android.graphics.PorterDuff.Mode.MULTIPLY);
-
-        ObjectAnimator anim = ObjectAnimator.ofInt(mprogressBar, "progress", 0, 100);
-        anim.setDuration(1000);
-        anim.setInterpolator(new DecelerateInterpolator());
-        anim.start();
+        startService(new Intent(this, MyService.class));
+        //Get Firebase auth instance
+          auth = FirebaseAuth.getInstance();
+          mDatabase = FirebaseDatabase.getInstance().getReference();
+//
+//        mprogressBar = (ProgressBar) findViewById(R.id.progressBar);
+//        mprogressBar.setVisibility(View.VISIBLE);
+//        mprogressBar.getIndeterminateDrawable().setColorFilter(getResources()
+//                        .getColor(R.color.aya2)
+//                , android.graphics.PorterDuff.Mode.MULTIPLY);
+//
+//        ObjectAnimator anim = ObjectAnimator.ofInt(mprogressBar, "progress", 0, 100);
+//        anim.setDuration(1000);
+//        anim.setInterpolator(new DecelerateInterpolator());
+//        anim.start();
 
 
 
@@ -74,41 +70,64 @@ Log.d("sssssssssssssss","Service is off ");
         }
       //  String userId = mDatabase.push().getKey();
 
-
         mDatabase.setValue(list);*/
 
 
-
-        new Handler().postDelayed(new Runnable() {
-
-
-
-            @Override
-            public void run() {
-                // This method will be executed once the timer is over
-                // Start your app main activity
-                Intent i = new Intent(SplashScreen.this, SiginINorUP.class);
-                startActivity(i);
+        if ((auth.getCurrentUser() != null)) {
+            mDatabase = mDatabase.child("students").child(auth.getCurrentUser().getUid().toString());
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    value = dataSnapshot.child("is_verified").getValue(Boolean.class);
+                    if (value == Boolean.TRUE)
 
 
-                // close this activity
-                finish();
-            }
-        }, SPLASH_TIME_OUT);
+                    {
+
+                        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
+                    } else {
+                        Intent intent = new Intent(SplashScreen.this, activationWarning.class);
+                        //     Log.d(TAG, mDatabase.child("students").child(auth.getCurrentUser().getUid().toString()).child("is_verified").tgetoString());
+                        startActivity(intent);
+                        finish();
+                    }
+                    Log.d(TAG, "Value is: " + value);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
+            });
+        } else {
+            new Handler().postDelayed(new Runnable() {
+
+
+                @Override
+                public void run() {
+
+                    // This method will be executed once the timer is over
+                    // Start your app main activity
+                    Intent i = new Intent(SplashScreen.this, SiginInActivity.class);
+                    startActivity(i);
+                    // close this activity
+                    finish();
+                }
+            }, SPLASH_TIME_OUT);
 
 /*
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);*/
 
-    }
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
         }
-        return false;
     }
+
+
 
 }

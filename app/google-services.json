@@ -8,43 +8,44 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:619812447348:android:b1c4ef26b9fa1920",
-        "android_client_info": {
-          "package_name": "gp_project.swes"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "619812447348-qdsr16f3etd2q2n2lkhn3sc7c3p9otes.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCXy52_uxMgDvkdRWyNtqB9PGzgecIEQuk"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:619812447348:android:d41a8b1f96b3f4d1",
         "android_client_info": {
           "package_name": "swes.swes"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "619812447348-n6f3cd9jks351tk7n5uoc1kcrrjp5aua.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "swes.swes",
+            "certificate_hash": "d5f0d2aacb6fda178bbdeb6c37c938c66dfc31c5"
+          }
+        },
+        {
+          "client_id": "619812447348-lt9ukg7im7lmr6inpb8n2icev0cfgufg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "swes.swes",
+            "certificate_hash": "85fff6b18d6a01827edb014f6650cf925adead70"
+          }
+        },
+        {
+          "client_id": "619812447348-n3sv051ies3pumk0lpo1hhoj7mrthaek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "swes.swes",
+            "certificate_hash": "c9f6849e2c9dcd4911f7f200bf977bf1fd6c6cae"
+          }
+        },
+        {
+          "client_id": "619812447348-sdmq7m2uh4djmjc3a6a6lee7o3peimsr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "swes.swes",
+            "certificate_hash": "9181ba29668976d6ba8c6a203a4b5636b2c97a8c"
+          }
+        },
         {
           "client_id": "619812447348-28nm4fklbqjumg0l8167gokulbis6ei9.apps.googleusercontent.com",
           "client_type": 1,

@@ -1,14 +1,18 @@
 package swes.swes.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.DownloadListener;
+import android.webkit.WebView;
 
 import swes.swes.R;
+import swes.swes.activity.WebViewController;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +31,7 @@ public class RefrencesFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    WebView webView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,7 +70,21 @@ public class RefrencesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_refrences, container, false);
+        View v = inflater.inflate(R.layout.fragment_refrences, container, false);
+        webView = (WebView)v.findViewById(R.id.help_webview);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("http://www.onlineprogrammingbooks.com");
+        webView.setWebViewClient(new WebViewController());
+        webView.setDownloadListener(new DownloadListener() {
+            public void onDownloadStart(String url, String userAgent,
+                                        String contentDisposition, String mimetype,
+                                        long contentLength) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

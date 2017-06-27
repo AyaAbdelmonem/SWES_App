@@ -12,10 +12,19 @@ public class Student {
     private  String Password;
     private  String Email;
     private  String StudentPicture;
+    private  Boolean is_verified = false;
     private List<Video> videos;
     private  List<Test> tests;
     private List<Comment> comments;
     private  List<CaseStudy> caseStudies;
+
+    public Boolean getIs_verified() {
+        return is_verified;
+    }
+
+    public void setIs_verified(Boolean is_verified) {
+        this.is_verified = is_verified;
+    }
 
     public String getName() {
         return Name;

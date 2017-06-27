@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="swes.swes.activity.activationWarning"
+    android:background="@color/white">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/warnnnn"
+    android:layout_gravity="center"
+    android:layout_marginTop="25dp"/>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Sorry ! your account is not verified "
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="5dp"
+    android:textColor="#B36678"
+    android:textSize="20sp"
+    android:fontFamily="serif"
+    android:layout_marginTop="50dp"/>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="You need to verify your account first in order to login . "
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="5dp"
+    android:textSize="20sp"
+    android:textColor="#B36678"
+
+    android:fontFamily="serif"
+    android:layout_gravity="center"
+    android:layout_marginTop="10dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resend verification email"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textSize="18sp"
+            android:textColor="#865E67"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="60dp"/>
+
+        <ImageButton
+            android:id="@+id/resend_verification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/white"
+            android:src="@drawable/redoooo" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout !"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textSize="25sp"
+            android:textColor="#865E67"
+            android:layout_gravity="center"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="20dp"/>
+
+        <ImageButton
+            android:id="@+id/logout_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@color/white"
+            android:src="@drawable/logout_icon" />
+    </LinearLayout>
+</LinearLayout>

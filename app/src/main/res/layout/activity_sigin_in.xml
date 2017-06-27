@@ -4,7 +4,6 @@
     android:id="@+id/activity_sigin_in"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context="swes.swes.activity.SiginInActivity">
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -15,7 +14,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@color/background_SiginUP"
+            android:background="@color/white"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin">
@@ -25,8 +24,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="30dp"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/cap" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SWES"
+                android:textStyle="bold"
+                android:textColor="#724952"
+                android:textSize="30sp"
+                android:fontFamily="cursive"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -39,8 +46,8 @@
                     android:layout_marginBottom="10dp"
                     android:hint="E-mail"
                     android:inputType="textEmailAddress"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    android:textColor="#B36678"
+                    android:textColorHint="#B36678" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -54,10 +61,20 @@
                     android:layout_marginBottom="10dp"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    android:textColor="#B36678"
+                    android:textColorHint="#B36678" />
             </android.support.design.widget.TextInputLayout>
-
+            <Button
+                android:id="@+id/btn_reset_password"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dip"
+                android:background="@null"
+                android:text="Forgot Password?"
+                android:textAllCaps="false"
+                android:textColor="#724952"
+                android:layout_marginLeft="100dp"
+                />
             <!-- Login Button -->
 
             <Button
@@ -65,19 +82,34 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dip"
-                android:background="@color/button_siginUP"
+                android:background="#724952"
                 android:text="Sigin In"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/white" />
 
-            <Button
-                android:id="@+id/btn_reset_password"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text ="____________ OR __________"
+                android:layout_marginTop="20dp"/>
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
+                android:layout_marginTop="20dp"
+
+                />
+            <Button
+                android:id="@+id/sign_me_up"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dip"
                 android:background="@null"
-                android:text="Forget Password"
+                android:text="Not Registered ? Sign up!"
                 android:textAllCaps="false"
-                android:textColor="@color/colorAccent" />
+                android:textColor="#724952"
+                android:layout_gravity="center"
+                />
 
 
 

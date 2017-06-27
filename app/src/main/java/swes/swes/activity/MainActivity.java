@@ -530,6 +530,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+
                 DataSnapshot snapshot = dataSnapshot.child(uid);
                 Student stu = new Student();
                 stu = snapshot.getValue(Student.class);

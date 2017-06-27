@@ -9,12 +9,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.AboutUsActivity" />
+        <activity android:name=".activity.AboutUsActivity"
+            android:parentActivityName=".activity.MainActivity"
+            />
         <activity
             android:name=".activity.SplashScreen"
             android:exported="true" />
@@ -112,6 +114,30 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="swes.swes.activity.LessonActivity" />
+        </activity>
+
+
+
+        <activity android:name=".activity.VerifyMeActivity">
+            <intent-filter>
+
+                <!-- Sets the intent action to view the activity -->
+                <action android:name="android.intent.action.VIEW" />
+                <!-- Allows the link to be opened from a web browser -->
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Allows the deep link to be used without specifying the app name -->
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- URI http://www.mydeeplink.com -->
+                <data
+                    android:host="swesapp-335ca.firebaseapp.com"
+                    android:pathPrefix="/__/auth/action"
+                    android:scheme="https" />
+                />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.activationWarning"
+            android:parentActivityName=".activity.SiginInActivity"  />
+        <activity android:name=".activity.ResetPasswordActivity">
         </activity>
     </application>
 
