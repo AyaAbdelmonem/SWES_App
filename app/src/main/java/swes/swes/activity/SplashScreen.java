@@ -1,10 +1,14 @@
 package swes.swes.activity;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +35,7 @@ public class SplashScreen extends Activity {
     private DatabaseReference mDatabase;
     //private ProgressBar progressBar;
 
-  //  ProgressBar mprogressBar;
+    ProgressBar mprogressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +46,17 @@ public class SplashScreen extends Activity {
         //Get Firebase auth instance
           auth = FirebaseAuth.getInstance();
           mDatabase = FirebaseDatabase.getInstance().getReference();
-//
-//        mprogressBar = (ProgressBar) findViewById(R.id.progressBar);
-//        mprogressBar.setVisibility(View.VISIBLE);
-//        mprogressBar.getIndeterminateDrawable().setColorFilter(getResources()
-//                        .getColor(R.color.aya2)
-//                , android.graphics.PorterDuff.Mode.MULTIPLY);
-//
-//        ObjectAnimator anim = ObjectAnimator.ofInt(mprogressBar, "progress", 0, 100);
-//        anim.setDuration(1000);
-//        anim.setInterpolator(new DecelerateInterpolator());
-//        anim.start();
+
+        mprogressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mprogressBar.setVisibility(View.VISIBLE);
+        mprogressBar.getIndeterminateDrawable().setColorFilter(getResources()
+                        .getColor(R.color.aya2)
+                , android.graphics.PorterDuff.Mode.MULTIPLY);
+
+        ObjectAnimator anim = ObjectAnimator.ofInt(mprogressBar, "progress", 0, 100);
+        anim.setDuration(1000);
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.start();
 
 
 
@@ -121,9 +125,7 @@ public class SplashScreen extends Activity {
                 }
             }, SPLASH_TIME_OUT);
 
-/*
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);*/
+
 
         }
     }

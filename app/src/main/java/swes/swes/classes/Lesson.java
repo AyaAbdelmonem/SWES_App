@@ -10,12 +10,29 @@ public class Lesson implements Serializable {
 
     private int Lesson_number;
     private  String Lesson_name;
-    private float TotalRate;
-    private int RateCount;
     private Test Test;
-//    private List<Video> videos;
-//    private List<Refrences> refrences;
-//    private  List<Comment> comments;
+    private String lesson_video;
+    private String story;
+    private String lesson_photo;
+    private String desc;
+
+
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getLesson_photo() {
+        return lesson_photo;
+    }
+
+    public void setLesson_photo(String lesson_photo) {
+        this.lesson_photo = lesson_photo;
+    }
 
     public int getLesson_number() {
         return Lesson_number;
@@ -33,21 +50,7 @@ public class Lesson implements Serializable {
         Lesson_name = lesson_name;
     }
 
-    public float getTotalRate() {
-        return TotalRate;
-    }
 
-    public void setTotalRate(float totalRate) {
-        TotalRate = totalRate;
-    }
-
-    public int getRateCount() {
-        return RateCount;
-    }
-
-    public void setRateCount(int rateCount) {
-        RateCount = rateCount;
-    }
 
     public Test getTest() {
         return Test;
@@ -57,27 +60,20 @@ public class Lesson implements Serializable {
         this.Test = test;
     }
 
-//    public List<Video> getVideos() {
-//        return videos;
-//    }
-//
-//    public void setVideos(List<Video> videos) {
-//        this.videos = videos;
-//    }
-//
-//    public List<Refrences> getRefrences() {
-//        return refrences;
-//    }
-//
-//    public void setRefrences(List<Refrences> refrences) {
-//        this.refrences = refrences;
-//    }
-//
-//    public List<Comment> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(List<Comment> comments) {
-//        this.comments = comments;
-//    }
+    public String getLesson_video() {
+        return lesson_video;
+    }
+
+    public void setLesson_video(String lesson_video) {
+        this.lesson_video = lesson_video;
+    }
+
+    public String getStory() {
+        return story;
+    }
+
+    public void setStory(String story) {
+        this.story = story;
+    }
+
 }

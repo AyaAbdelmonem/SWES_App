@@ -268,9 +268,7 @@ public class MainActivity extends AppCompatActivity {
                 //FAQ
                 FAQFragment FAQ_fragment = new FAQFragment();
                 return FAQ_fragment;
-            // Intent i = new Intent(MainActivity.this, FAQActivity.class);
-            //startActivity(i);
-            //return  null;
+
             case 2:
                 // Languagae fragment
                 RefrencesFragment refrencesFragment = new RefrencesFragment();
@@ -290,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseAuth auth;
                 auth = FirebaseAuth.getInstance();
                 auth.signOut();
-                Intent intent = new Intent(MainActivity.this, SiginINorUP.class);
+                Intent intent = new Intent(MainActivity.this, SiginInActivity.class);
                 startActivity(intent);
                 finish();
 
@@ -444,24 +442,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-     /*   if (id == R.id.action_logout) {
-            Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
-             FirebaseAuth auth;
-            auth = FirebaseAuth.getInstance();
-            auth.signOut();
-            Intent intent =new Intent(MainActivity.this,SiginINorUP.class);
-            startActivity(intent);
-            finish();
-            return true;
-        }*/
 
-/*        if (id == R.id.settings) {
-            Intent i = new Intent(MainActivity.this,SettingsActivity.class);
-            startActivity(i);
-            finish();
-            return true;
-        }*/
         if (id == R.id.notification) {
             Intent i = new Intent(MainActivity.this, NotificationActivity.class);
             startActivity(i);
@@ -554,7 +535,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Log.d("User P.P", e.getMessage());
                 }
-//                Log.d("Firebaseclass", "Value is: " + stu.getName());
             }
 
             @Override

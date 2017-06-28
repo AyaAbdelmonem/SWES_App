@@ -9,10 +9,9 @@ import java.util.List;
 public class Question {
 
     private String question;
-    private  int question_number;
+
     private String RightAnswer;
     private List<String> Answers;
-    private Boolean IsRight;
 
     public String getQuestion() {
         return question;
@@ -22,13 +21,6 @@ public class Question {
         this.question = question;
     }
 
-    public int getQuestion_number() {
-        return question_number;
-    }
-
-    public void setQuestion_number(int question_number) {
-        this.question_number = question_number;
-    }
 
     public String getRightAnswer() {
         return RightAnswer;
@@ -46,11 +38,5 @@ public class Question {
         Answers = answers;
     }
 
-    public Boolean getRight() {
-        return IsRight;
-    }
 
-    public void setRight(Boolean right) {
-        IsRight = right;
-    }
 }

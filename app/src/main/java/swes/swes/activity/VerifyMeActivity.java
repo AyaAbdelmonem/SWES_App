@@ -28,7 +28,6 @@ public class VerifyMeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_me);
 
-      //final   Student st = new Student();
         auth = FirebaseAuth.getInstance();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -42,7 +41,6 @@ public class VerifyMeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-            //updateData();
              startActivity(new Intent(VerifyMeActivity.this, MainActivity.class));
              finish();
             }

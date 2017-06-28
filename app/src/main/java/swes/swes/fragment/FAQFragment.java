@@ -106,13 +106,8 @@ public class FAQFragment extends Fragment {
 
 
         expListView = (ExpandableListView) view.findViewById(R.id.lvExp);
-        //prepareListData();
 
-       /* progressDialog =new ProgressDialog(getActivity());
-        progressDialog.show();
-        progressDialog.setMessage("Loading Data");
-        progressDialog.setTitle("Loading");
-       progressDialog.setCanceledOnTouchOutside(false);*/
+
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
 
@@ -218,7 +213,6 @@ public class FAQFragment extends Fragment {
                     listDataChild.put(read_list.get(i).getQuestion(),newList);
                     //Log.d("222222222222",read_list.get(i).getAnswer());
                 }
-              //  progressDialog.dismiss();
                 swipeRefreshLayout.setRefreshing(false);
                 listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
                 expListView.setAdapter(listAdapter);
@@ -234,7 +228,6 @@ public class FAQFragment extends Fragment {
                         .setMessage("Check Internet connection")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // getActivity().dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
                             }
                         })
 
@@ -244,7 +237,6 @@ public class FAQFragment extends Fragment {
         });
 
 
-        //progressDialog.dismiss();
     }
 
 

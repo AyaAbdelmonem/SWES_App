@@ -34,17 +34,8 @@ public class AboutUsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        // getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("About us");
-     //   setTitle(getResources().getString(R.string.arabic)+"                              ");
-//        ActionBar actionBar = getActionBar();
-//
-//        // show the action bar title
-//        actionBar.setDisplayShowTitleEnabled(true);
-//
-//        actionBar.setTitle("     "+getResources().getString(R.string.arabic)+"       ");
-//        getSupportActionBar(). setDisplayShowTitleEnabled(true);
-    //   getSupportActionBar().setTitle("     "+getResources().getString(R.string.arabic)+"       ");
+
 
         // Read from the database
 

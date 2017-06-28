@@ -1,16 +1,13 @@
 package swes.swes.youtube;
 
-import android.content.res.Configuration;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import swes.swes.R;
-
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -18,6 +15,8 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayer.PlayerStyle;
 import com.google.android.youtube.player.YouTubePlayerView;
+
+import swes.swes.R;
 
 public class YoutubeActivity extends YouTubeBaseActivity implements
         YouTubePlayer.OnInitializedListener , YouTubePlayer.PlaybackEventListener{
@@ -28,8 +27,9 @@ public class YoutubeActivity extends YouTubeBaseActivity implements
 
     // YouTube player view
     private YouTubePlayerView youTubeView;
-
+    String YOUTUBE_VIDEO_CODE;
     Boolean isLandscape;
+    TextView status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +39,37 @@ public class YoutubeActivity extends YouTubeBaseActivity implements
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_youtube);
-
+        Intent intent = getIntent();
+        String video = intent.getStringExtra("Lesson_video");
+        String story = intent.getStringExtra("Lesson_story");
+        status =(TextView)findViewById(R.id.tv_status);
         youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
 
-        // Initializing video player with developer key
-
+        youTubeView.setVisibility(View.INVISIBLE);
+        status.setVisibility(View.INVISIBLE);
+        if(video==null&&story==null){
+            youTubeView.setVisibility(View.INVISIBLE);
+            status.setVisibility(View.VISIBLE);
+            status.setText("No story for this lesson");
+        }
+        else if(video!=null){
+            status.setVisibility(View.INVISIBLE);
+            youTubeView.setVisibility(View.VISIBLE);
+            // Initializing video player with developer key
             youTubeView.initialize(Config.DEVELOPER_KEY, this);
+            YOUTUBE_VIDEO_CODE = video;
+        }
+        else if(story!=null){
+            status.setVisibility(View.INVISIBLE);
+            youTubeView.setVisibility(View.VISIBLE);
+            // Initializing video player with developer key
+            youTubeView.initialize(Config.DEVELOPER_KEY, this);
+            YOUTUBE_VIDEO_CODE = story;
+        }
+
+
+
+
 
 
 
@@ -69,7 +94,7 @@ public class YoutubeActivity extends YouTubeBaseActivity implements
 
             // loadVideo() will auto play video
             // Use cueVideo() method, if you don't want to play it automatically
-            player.loadVideo(Config.YOUTUBE_VIDEO_CODE);
+            player.loadVideo(YOUTUBE_VIDEO_CODE);
 
 
             player.setPlayerStyle(PlayerStyle.DEFAULT);

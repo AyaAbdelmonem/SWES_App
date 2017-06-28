@@ -120,61 +120,9 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-//// trying push notification 
 
 
-        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("CC");
-        final Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        builder = new NotificationCompat.Builder(getActivity());
-        mRootRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                builder.setSmallIcon(R.mipmap.ic_launcher);
-//                builder.setContentTitle("Firebase Push Notification");
-//                builder.setContentText(s);
-//               builder.setSound(defaultSoundUri);
-//                NotificationManager notificationManager = (NotificationManager) getActivity(). getSystemService(NOTIFICATION_SERVICE);
-//                notificationManager.notify(1, builder.build());
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-//        if (value!=null) {
-//            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity())
-//                    .setSmallIcon(R.drawable.ic_home)
-//                    .setContentTitle("FCM Message")
-//                    .setContentText(value)
-//                    .setAutoCancel(true)
-//                    .setSound(defaultSoundUri);
-//
-//
-//            NotificationManager notificationManager =
-//                    (NotificationManager) getActivity().getSystemService(NOTIFICATION_SERVICE);
-//
-//            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-//        }
     }
 
     @Override
@@ -184,15 +132,6 @@ public class HomeFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_home, container, false);
 
 
-//        Button Goto_course_button =(Button) view.findViewById(R.id.gotoCourse_button);
-//
-//        Goto_course_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getActivity(),LevelsActivity.class);
-//                getActivity().startActivity(intent);
-//            }
-//        });
 
 
         database = FirebaseDatabase.getInstance();

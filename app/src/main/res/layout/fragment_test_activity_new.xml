@@ -20,7 +20,9 @@
         android:layout_below="@+id/line"
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_margin="16dp"/>
 
     <RadioGroup
         android:layout_below="@+id/section_label"
@@ -33,6 +35,7 @@
      android:layout_height="wrap_content"
      android:text="answer1"
      android:id="@+id/answer1"
+     android:layout_margin="8dp"
      />
 
         <RadioButton
@@ -40,6 +43,7 @@
             android:layout_height="wrap_content"
             android:text="answer2"
             android:id="@+id/answer2"
+            android:layout_margin="8dp"
             />
 
         <RadioButton
@@ -47,6 +51,7 @@
             android:layout_height="wrap_content"
             android:text="answer3"
             android:id="@+id/answer3"
+            android:layout_margin="8dp"
             />
 
         <RadioButton
@@ -54,17 +59,22 @@
             android:layout_height="wrap_content"
             android:text="answer4"
             android:id="@+id/answer4"
+            android:layout_margin="8dp"
             />
 
 
     </RadioGroup>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="go"
+        android:text="Submit"
         android:id="@+id/btnDisplay"
-        android:layout_below="@+id/radio_group"
-        />
+        android:background="?colorPrimary"
+        android:textColor="?android:colorBackground"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="97dp" />
 
 </RelativeLayout>

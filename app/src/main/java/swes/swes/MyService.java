@@ -36,7 +36,7 @@ public class MyService extends Service {
     }
 
     NotificationCompat.Builder  builder;
-    String Node="CC";
+    String Node="Levels";
     ArrayList<NotificationModel> NoticationList ;
 
     String uid;
@@ -64,7 +64,7 @@ public class MyService extends Service {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 builder.setSmallIcon(R.mipmap.ic_launcher);
-               builder.setContentTitle("CC");
+               builder.setContentTitle(Node);
                 builder.setContentText(dataSnapshot.getKey().toString());
                 builder.setSound(defaultSoundUri);
                 NotificationManager notificationManager = (NotificationManager) getApplicationContext(). getSystemService(NOTIFICATION_SERVICE);

@@ -10,16 +10,16 @@ import java.util.Map;
 public class Level implements Serializable {
 
     private Map<String,Lesson> Lessons;
-    private  CaseStudy caseStudy;
+    private  String caseStudy;
     private  String LevelName;
     private  int LevelNumber;
 
 
-    public CaseStudy getCaseStudy() {
+    public String getCaseStudy() {
         return caseStudy;
     }
 
-    public void setCaseStudy(CaseStudy caseStudy) {
+    public void setCaseStudy(String caseStudy) {
         this.caseStudy = caseStudy;
     }
 

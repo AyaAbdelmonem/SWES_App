@@ -28,6 +28,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 import swes.swes.R;
@@ -43,12 +45,12 @@ public class TestActivity_new extends AppCompatActivity {
         setContentView(R.layout.activity_test_new);
 
 
-       String test_string= getIntent().getStringExtra("test");
+       String test_string= getIntent().getStringExtra("Lesson_test");
         Test test =new Test();
         Gson gson =new Gson();
         test=(Test) gson.fromJson(test_string,Test.class);
 
-        Log.d("T111111111111",test.getQuestions().get(0).getQuestion());
+     //  Log.d("T111111111111",test.getQuestions().get(0).getQuestion());
 
 
 
@@ -57,23 +59,62 @@ public class TestActivity_new extends AppCompatActivity {
 
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String[] data = {test.getQuestions().get(0).getQuestion(),
-                test.getQuestions().get(1).getQuestion()
-        };
+//        String[] data = {test.getQuestions().get(0).getQuestion(),
+//                test.getQuestions().get(1).getQuestion()
+//        };
 
-        adapter = new MyFragmentAdapter(getSupportFragmentManager(), 2, this, data);
-        pager.setAdapter(adapter);
+        ArrayList<String> test_Quest_List=new ArrayList<>();
+        if (test!=null) {
+            if (test.getQuestions().size() > 0) {
+                for (int i = 0; i < test.getQuestions().size(); i++) {
+                    test_Quest_List.add(test.getQuestions().get(i).getQuestion());
+                }
+            }
 
-//        ((Button)findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                reload();
-//            }
-//        });
+            ArrayList<String> test_right_List = new ArrayList<>();
+            if (test.getQuestions().size() > 0) {
+                for (int i = 0; i < test.getQuestions().size(); i++) {
+                    test_right_List.add(test.getQuestions().get(i).getRightAnswer());
+                }
+            }
 
 
+            ArrayList<String> test_ans_List = new ArrayList<>();
+            if (test.getQuestions().size() > 0) {
+                for (int i = 0; i < test.getQuestions().size(); i++) {
+                    test_ans_List.add(test.getQuestions().get(i).getAnswers().get(0)
+                            + "---" + test.getQuestions().get(i).getAnswers().get(1)
+                            + "---" + test.getQuestions().get(i).getAnswers().get(2)
+                            + "---" + test.getQuestions().get(i).getAnswers().get(3)
+
+                    );
+                }
+            }
+
+            String[] quest_arr = new String[test_Quest_List.size()];
+            quest_arr = test_Quest_List.toArray(quest_arr);
+
+            String[] ans_arr = new String[test_ans_List.size()];
+            ans_arr = test_ans_List.toArray(ans_arr);
+
+            String[] right_arr = new String[test_right_List.size()];
+            right_arr = test_right_List.toArray(right_arr);
+
+
+            if (quest_arr.length > 0) {
+                adapter = new MyFragmentAdapter(getSupportFragmentManager(),
+                        test.getQuestions().size()
+                        , this, quest_arr, ans_arr, right_arr);
+                pager.setAdapter(adapter);
+            }
+
+        }
+        else {
+            Toast.makeText(this, "No test at this lesson", Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
 
     }
 
@@ -93,17 +134,25 @@ public class TestActivity_new extends AppCompatActivity {
         private int slideCount;
         private Context context;
         private String[] data;
+        private String[] answers;
 
-        public MyFragmentAdapter(FragmentManager fm, int slideCount, Context context, String[] data) {
+        private String[] RightAnswer;
+
+
+        public MyFragmentAdapter(FragmentManager fm, int slideCount, Context context, String[] data,String[]
+                                 ans,String[] rightAnswer
+                                 ) {
             super(fm);
             this.slideCount = slideCount;
             this.context = context;
             this.data = data;
+            this.answers=ans;
+            this.RightAnswer=rightAnswer;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return new MyFragment(data[position], context);
+            return new MyFragment(data[position],answers[position], RightAnswer[position], context);
         }
 
         @Override
@@ -125,16 +174,23 @@ public class TestActivity_new extends AppCompatActivity {
             return  data[position];
         }
     }
+
     @SuppressLint("ValidFragment")
     public static    class MyFragment extends Fragment {
         private String text;
+
+        private String answers;
+
+        private  String RightAns;
 
         Button btnDisplay;
         RadioGroup radioGroup;
         RadioButton radioButton;
 
-        public MyFragment(String text, Context context) {
+        public MyFragment(String text,String ans, String right, Context context) {
             this.text = text;
+            this.answers=ans;
+            this.RightAns=right;
         }
 
         @Override
@@ -142,35 +198,35 @@ public class TestActivity_new extends AppCompatActivity {
             View view = inflater.inflate(R.layout.fragment_test_activity_new, null);
             ((TextView)view.findViewById(R.id.section_label)).setText(text);
 
+
             radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
             btnDisplay = (Button) view.findViewById(R.id.btnDisplay);
-//                    ((Button)view.findViewById(R.id.load_radio_buttons_btn)).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                addRadioButtons(4);
-//            }
-//        });
+
+
+            RadioButton radioButton1,radioButton2,radioButton3,radioButton4;
+            radioButton1=(RadioButton)view.findViewById(R.id.answer1);
+            radioButton2=(RadioButton)view.findViewById(R.id.answer2);
+            radioButton3=(RadioButton)view.findViewById(R.id.answer3);
+            radioButton4=(RadioButton)view.findViewById(R.id.answer4);
+
+
+            StringTokenizer tokens = new StringTokenizer(answers, "---");
+
+            String first = tokens.nextToken();// this will contain "Fruit"
+            String second = tokens.nextToken();
+            String third= tokens.nextToken();
+            String fourth= tokens.nextToken();
+
+            radioButton1.setText(first);radioButton2.setText(second);radioButton3.setText(third);
+            radioButton4.setText(fourth);
+
 
            addListenerOnButton();
 
 
             return view;
         }
-//        public void addRadioButtons(int number) {
-//
-//            for (int row = 0; row < 1; row++) {
-//                RadioGroup ll = new RadioGroup(getActivity());
-//                ll.setOrientation(LinearLayout.HORIZONTAL);
-//
-//                for (int i = 1; i <= number; i++) {
-//                    RadioButton rdbtn = new RadioButton(getActivity());
-//                    rdbtn.setId((row * 2) + i);
-//                    rdbtn.setText("Radio " + rdbtn.getId());
-//                    ll.addView(rdbtn);
-//                }
-//                ((RadioGroup) getActivity().findViewById(R.id.radio_group)).addView(ll);
-//            }
-//        }
+
 
         public void addListenerOnButton() {
 
@@ -187,8 +243,12 @@ public class TestActivity_new extends AppCompatActivity {
                     // find the radiobutton by returned id
                     radioButton = (RadioButton) getActivity().findViewById(selectedId);
 
-                    Toast.makeText(getActivity(),
-                            radioButton.getText(), Toast.LENGTH_SHORT).show();
+
+                    if (radioButton.getText().toString().equals(RightAns))
+                    {
+                        Toast.makeText(getActivity(),
+                         "Right Answer", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
 

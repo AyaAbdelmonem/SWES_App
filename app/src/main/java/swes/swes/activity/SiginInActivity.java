@@ -107,41 +107,7 @@ public class SiginInActivity extends AppCompatActivity  implements GoogleApiClie
             @Override
             public void onClick(View v) {
 
-//                final Dialog dialog = new Dialog(SiginInActivity.this );
-//                dialog.setContentView(R.layout.custom_dialogue);
-//
-//                Button button_ok;
-//
-//
-//                inputResetEmail=(EditText) dialog.findViewById(R.id.reset_email);
-//
-//                button_ok = (Button) dialog.findViewById(R.id.resend_forget_verification);
-//
-//
-//               button_ok.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                        Reset_email = inputResetEmail.getText().toString().trim();
-//                        if (TextUtils.isEmpty(Reset_email)) {
-//                            Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
-//                            return;
-//                        }
-//
-//                        auth.sendPasswordResetEmail(Reset_email)
-//                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<Void> task) {
-//                                        if (task.isSuccessful()) {
-//                                            Toast.makeText(SiginInActivity.this, " Reset email sent ", Toast.LENGTH_SHORT).show();
-//                                        }
-//                                    }
-//                                });
-//                         dialog.dismiss();
-//                        //startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
-//                    }
-//                });
-//                dialog.show();
+
 
 
                 startActivity(new Intent(SiginInActivity.this, ResetPasswordActivity.class));
@@ -339,14 +305,6 @@ public class SiginInActivity extends AppCompatActivity  implements GoogleApiClie
         mDatabase.child("users").child(userId).setValue(user);
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
-//        // Check auth on Activity start
-//       /* if (auth.getCurrentUser() != null) {
-//            onAuthSuccess(auth.getCurrentUser());
-//        }*/
-//    }
+
 
 }

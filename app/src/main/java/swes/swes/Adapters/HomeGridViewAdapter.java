@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import swes.swes.R;
+import swes.swes.activity.CaseStudyActivity;
 import swes.swes.activity.LessonActivity;
 import swes.swes.classes.Lesson;
 import swes.swes.classes.Level;
@@ -33,6 +33,8 @@ import swes.swes.classes.Level;
 public class HomeGridViewAdapter extends BaseAdapter {
 
     private Context mContext;
+
+    BoomMenuButton bmb;
 
     private  int Length;
    List<Level> levels;
@@ -80,7 +82,7 @@ public class HomeGridViewAdapter extends BaseAdapter {
             final List<Lesson> lessons = new ArrayList<>();
             grid = inflater.inflate(R.layout.grid_single, null);
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);
-            BoomMenuButton bmb = (BoomMenuButton) grid.findViewById(R.id.grid_bmb);
+         bmb  = (BoomMenuButton) grid.findViewById(R.id.grid_bmb);
             textView.setText(levels.get(position).getLevelName());
             for (Map.Entry<String, Lesson> entry : levels.get(position).getLessons().entrySet()) {
                 lessons.add ( entry.getValue());
@@ -121,13 +123,14 @@ public class HomeGridViewAdapter extends BaseAdapter {
                                 public void onBoomButtonClick(int index) {
                                     // When the boom-button corresponding this builder is clicked.
                                     //Toast.makeText(mContext, "Clicked on Index " + index + " Position " + position, Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(mContext, LessonActivity.class);
-                                    Gson gson = new Gson();
-                                    String casestudy = gson.toJson(levels.get(position).getCaseStudy());
-                                    intent.putExtra(mContext.getString(R.string.lesson_extra),casestudy);
-                                    //mContext.startActivity(intent);
+                                    Intent intent = new Intent(mContext, CaseStudyActivity.class);
+//
+                                    intent.putExtra(mContext.getString(R.string.lesson_extra),levels.get(position).getCaseStudy());
+                                    mContext.startActivity(intent);
                                 }
+
                             });
+
                     bmb.addBuilder(builder);
                 }
                 else {
@@ -140,7 +143,6 @@ public class HomeGridViewAdapter extends BaseAdapter {
                                     @Override
                                     public void onBoomButtonClick(int index) {
                                         // When the boom-button corresponding this builder is clicked.
-                                        Toast.makeText(mContext, "Clicked on Index " + index + " Position " + position, Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(mContext, LessonActivity.class);
                                         Gson gson = new Gson();
                                         String lessonJson = gson.toJson(lessons.get(finalI));
@@ -154,9 +156,13 @@ public class HomeGridViewAdapter extends BaseAdapter {
                 }
                 }
 
+
+
             }else{
                 grid = (View) convertView;
             }
+
+
 
             return grid;
         }

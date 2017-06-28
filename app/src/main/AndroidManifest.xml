@@ -30,7 +30,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.SiginINorUP" />
         <activity android:name=".activity.SiginInActivity" />
         <activity android:name=".activity.SiginUpActivity" />
         <activity android:name=".activity.NotificationActivity" />
@@ -81,8 +80,12 @@
             android:resource="@color/colorAccent" />
         <!-- [END fcm_default_icon] -->
 
-        <activity android:name=".activity.LevelsActivity" />
-        <activity android:name=".activity.LessonActivity" />
+        <activity android:name=".activity.LevelsActivity"
+            android:parentActivityName=".activity.MainActivity"
+            />
+        <activity android:name=".activity.LessonActivity"
+            android:parentActivityName=".activity.LevelsActivity"
+            />
         <activity
             android:name=".PostsFeature.PostsMainActivity"
             android:parentActivityName=".activity.MainActivity" />
@@ -95,15 +98,17 @@
             android:name=".activity.OldPasswordActivity"
             android:parentActivityName=".activity.UserAccountActivity" />
         <activity
-            android:name=".activity.NewPasswordActivity"
-            android:parentActivityName=".activity.OldPasswordActivity" />
+        android:name=".activity.NewPasswordActivity"
+        android:parentActivityName=".activity.OldPasswordActivity" />
+        <activity
+            android:name=".activity.CaseStudyActivity"
+            android:parentActivityName=".activity.LevelsActivity" />
 
         <service
             android:name=".MyService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.TestActivity" />
         <activity
             android:name=".activity.TestActivity_new"
             android:label="@string/title_activity_test_new"
