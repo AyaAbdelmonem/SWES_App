@@ -1,5 +1,6 @@
 package swes.swes.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,6 +47,8 @@ public class UserAccountActivity extends AppCompatActivity {
     EditText et_name;
     TextView tv_email;
     ImageView iv_pp;
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +72,10 @@ public class UserAccountActivity extends AppCompatActivity {
             uid=auth.getCurrentUser().getUid();
 
         }
+
+        progressDialog =new ProgressDialog(this);
+        progressDialog.setMessage("Loading Inforamtion");
+        progressDialog.show();
         getCurrentStudent();
     }
 
@@ -92,7 +99,17 @@ public class UserAccountActivity extends AppCompatActivity {
 
                         @Override
                         public void onSuccess(Uri uri) {
-                            Picasso.with(UserAccountActivity.this).load(uri).placeholder(R.drawable.temp_pp).fit().centerCrop().into(iv_pp);
+                            Picasso.with(UserAccountActivity.this).load(uri).placeholder(R.drawable.temp_pp).fit().centerCrop().into(iv_pp, new com.squareup.picasso.Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    progressDialog.dismiss();
+                                }
+
+                                @Override
+                                public void onError() {
+
+                                }
+                            });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

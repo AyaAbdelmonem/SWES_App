@@ -18,7 +18,6 @@ import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import swes.swes.R;
 import swes.swes.activity.CaseStudyActivity;
@@ -75,21 +74,29 @@ public class HomeGridViewAdapter extends BaseAdapter {
         View grid;
         final LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final List<Lesson> lessons = new ArrayList<>();
+        if(levels.get(position).getLessons()!=null) {
+         for (Lesson l : levels.get(position).getLessons()) {
+            if (l != null) {
+            lessons.add(l);
 
+             }
+        }
+        }
         if (convertView == null) {
 
             grid = new View(mContext);
-            final List<Lesson> lessons = new ArrayList<>();
             grid = inflater.inflate(R.layout.grid_single, null);
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);
          bmb  = (BoomMenuButton) grid.findViewById(R.id.grid_bmb);
             textView.setText(levels.get(position).getLevelName());
-            for (Map.Entry<String, Lesson> entry : levels.get(position).getLessons().entrySet()) {
-                lessons.add ( entry.getValue());
-            }
 
             bmb.setButtonEnum(ButtonEnum.Ham);
-            switch (levels.get(position).getLessons().size()) {
+            switch (lessons.size()) {
+                case 0:
+                    bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_1);
+                    bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_1);
+                    break;
                 case 1:
                     bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_2);
                     bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_2);

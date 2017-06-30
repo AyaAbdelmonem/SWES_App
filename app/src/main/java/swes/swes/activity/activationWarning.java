@@ -68,4 +68,14 @@ public class activationWarning extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
+        auth.signOut();
+        Intent intent = new Intent(activationWarning.this, SiginInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -1,5 +1,6 @@
 package swes.swes.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,10 +36,17 @@ public class LessonActivity extends AppCompatActivity {
     TextView lesson_desc;
     ImageView lesson_pic;
     private StorageReference mStorageRef;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson);
+
+        progressDialog =new ProgressDialog(this);
+        progressDialog.setMessage("Loading Inforamtion");
+        progressDialog.show();
+
+
         TextView textView = (TextView) findViewById(R.id.bmb_textView_label);
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         textView.setText("Start learning");
@@ -90,10 +98,14 @@ public class LessonActivity extends AppCompatActivity {
                             @Override
                             public void onBoomButtonClick(int index) {
                                 // When the boom-button corresponding this builder is clicked.
-
+                                    if(lesson.getStory()!=null){
                                     Intent intent = new Intent(getApplicationContext(), YoutubeActivity.class);
                                     intent.putExtra("Lesson_story",lesson.getStory());
-                                    startActivity(intent);
+                                    startActivity(intent);}
+                                else
+                                    {
+                                        Toast.makeText(mUpButton.getContext(),"No story for this lesson",Toast.LENGTH_LONG).show();
+                                    }
 
                             }
                         });
@@ -124,7 +136,17 @@ public class LessonActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(Uri uri) {
-                    Picasso.with(LessonActivity.this).load(uri).placeholder(R.drawable.temp_pp).fit().centerCrop().into(lesson_pic);
+                    Picasso.with(LessonActivity.this).load(uri).placeholder(R.drawable.temp_pp).fit().centerCrop().into(lesson_pic, new com.squareup.picasso.Callback() {
+                        @Override
+                        public void onSuccess() {
+                            progressDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

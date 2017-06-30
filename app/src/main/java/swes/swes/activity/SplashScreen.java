@@ -2,6 +2,8 @@ package swes.swes.activity;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import swes.swes.MyService;
+import swes.swes.Network.CheckNetwork;
 import swes.swes.R;
 
 import static android.content.ContentValues.TAG;
@@ -58,6 +61,27 @@ public class SplashScreen extends Activity {
         anim.setInterpolator(new DecelerateInterpolator());
         anim.start();
 
+
+        CheckNetwork checkNetwork =  CheckNetwork.getInstance();
+        checkNetwork.setContext(this);
+        boolean network= checkNetwork.isNetworkAvailable();
+        if (!network){
+            //Toast.makeText(context,"Check internet connection",Toast.LENGTH_SHORT).show();
+
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+
+                alertDialog.setTitle("Info");
+                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //finish();
+
+                    }
+                });
+
+                alertDialog.show();
+            }
 
 
      /*   String[] questions =getResources().getStringArray(R.array.faq_questions);

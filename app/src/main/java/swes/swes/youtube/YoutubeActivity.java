@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -29,7 +27,6 @@ public class YoutubeActivity extends YouTubeBaseActivity implements
     private YouTubePlayerView youTubeView;
     String YOUTUBE_VIDEO_CODE;
     Boolean isLandscape;
-    TextView status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,26 +39,16 @@ public class YoutubeActivity extends YouTubeBaseActivity implements
         Intent intent = getIntent();
         String video = intent.getStringExtra("Lesson_video");
         String story = intent.getStringExtra("Lesson_story");
-        status =(TextView)findViewById(R.id.tv_status);
+
         youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
 
-        youTubeView.setVisibility(View.INVISIBLE);
-        status.setVisibility(View.INVISIBLE);
-        if(video==null&&story==null){
-            youTubeView.setVisibility(View.INVISIBLE);
-            status.setVisibility(View.VISIBLE);
-            status.setText("No story for this lesson");
-        }
-        else if(video!=null){
-            status.setVisibility(View.INVISIBLE);
-            youTubeView.setVisibility(View.VISIBLE);
+
+         if(video!=null){
             // Initializing video player with developer key
             youTubeView.initialize(Config.DEVELOPER_KEY, this);
             YOUTUBE_VIDEO_CODE = video;
         }
         else if(story!=null){
-            status.setVisibility(View.INVISIBLE);
-            youTubeView.setVisibility(View.VISIBLE);
             // Initializing video player with developer key
             youTubeView.initialize(Config.DEVELOPER_KEY, this);
             YOUTUBE_VIDEO_CODE = story;

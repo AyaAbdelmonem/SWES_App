@@ -40,7 +40,7 @@ public class AboutUsActivity extends AppCompatActivity {
         // Read from the database
 
                mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference ref = mDatabase.child("ِAboutus").child("paragraph");
+        DatabaseReference ref = mDatabase.child("Aboutus").child("paragraph");
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override

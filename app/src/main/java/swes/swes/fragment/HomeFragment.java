@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
         private ListView lv_prereq;
         private SwipeRefreshLayout swipeRefreshLayout;
         DatabaseReference ref;
-        ProgressDialog progressDialog ;
+        //ProgressDialog progressDialog ;
 
                 ArrayList<Map<String, String>> prerequiste = new ArrayList<>();
        private GoogleApiClient client;
@@ -145,9 +145,20 @@ public class HomeFragment extends Fragment {
         tv_desc_title = (TextView)  view.findViewById(R.id.tv_course_desc_title);
         tv_pre_title = (TextView)  view.findViewById(R.id.tv_course_prereq);
         swipeRefreshLayout = (SwipeRefreshLayout)  view.findViewById(R.id.swipe_refresh_layout);
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+//        progressDialog = new ProgressDialog(getContext());
+//        progressDialog.setCanceledOnTouchOutside(false);
+//        progressDialog.show();
+        swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+
+                        // This method performs the actual data-refresh operation.
+                        // The method calls setRefreshing(false) when it's finished.
+                        swipeRefreshLayout.setRefreshing(false);                    }
+                }
+        );
 
 
         lv_prereq.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -263,7 +274,17 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onSuccess(Uri uri) {
                         // display photo
-                        Picasso.with(getContext()).load(uri).fit().centerCrop().into(iv_course_pic);
+                        Picasso.with(getContext()).load(uri).fit().centerCrop().into(iv_course_pic, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                   swipeRefreshLayout.setRefreshing(false);
+                            }
+
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -277,7 +298,7 @@ public class HomeFragment extends Fragment {
                 tv_desc.setText(courseInfo.getDesc());
                 tv_desc_title.setText(getString(R.string.course_desc));
                 tv_pre_title.setText(getString(R.string.course_prereq));
-                progressDialog.dismiss();
+               // progressDialog.dismiss();
 
             }
 

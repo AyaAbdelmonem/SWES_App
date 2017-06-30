@@ -14,4 +14,5 @@ public class WebViewController extends WebViewClient {
         view.loadUrl(url);
         return true;
     }
+
 }

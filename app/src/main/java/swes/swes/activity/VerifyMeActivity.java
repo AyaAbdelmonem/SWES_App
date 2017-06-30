@@ -11,8 +11,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-
 import swes.swes.R;
 import swes.swes.classes.Student;
 
@@ -35,28 +33,28 @@ public class VerifyMeActivity extends AppCompatActivity {
         verify = (ImageView) findViewById(R.id.verify_me_button);
 
 
-        verify.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-
-             startActivity(new Intent(VerifyMeActivity.this, MainActivity.class));
-             finish();
-            }
-
-
-            }
-       );
+//        verify.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//             startActivity(new Intent(VerifyMeActivity.this, MainActivity.class));
+//             finish();
+//            }
+//
+//
+//            }
+//       );
 
     }
 
    public void updateData (View view)
     {
 
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("is_verified", true);
-       mDatabase.child("students").child(auth.getCurrentUser().getUid().toString()).updateChildren(result);
+//        HashMap<String, Object> result = new HashMap<>();
+//        result.put("is_verified", true);
+       mDatabase.child("students").child(auth.getCurrentUser().getUid().toString()).child("is_verified").setValue(true);
         startActivity(new Intent(VerifyMeActivity.this, MainActivity.class));
             finish();
 

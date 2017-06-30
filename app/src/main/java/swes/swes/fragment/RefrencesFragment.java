@@ -1,17 +1,21 @@
 package swes.swes.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import swes.swes.R;
+import swes.swes.activity.CaseStudyActivity;
 import swes.swes.activity.WebViewController;
 
 /**
@@ -32,6 +36,9 @@ public class RefrencesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     WebView webView;
+
+    private ProgressDialog progressBar;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,7 +81,6 @@ public class RefrencesFragment extends Fragment {
         webView = (WebView)v.findViewById(R.id.help_webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("http://www.onlineprogrammingbooks.com");
-        webView.setWebViewClient(new WebViewController());
         webView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent,
                                         String contentDisposition, String mimetype,
@@ -84,8 +90,48 @@ public class RefrencesFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        progressBar = ProgressDialog.show(getActivity(), "Loading casestudy", "Loading...");
+
+        webView.setWebViewClient(new WebViewClient() {
+
+
+            public void onPageFinished(WebView view, String url) {
+                if (progressBar.isShowing()) {
+                    progressBar.dismiss();
+                }
+            }
+
+
+        });
+        v.setOnKeyListener( new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey( View v, int keyCode, KeyEvent event )
+            {
+                if( event.getAction() == KeyEvent.ACTION_DOWN )
+                {
+
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_BACK:
+                            if (webView.canGoBack()) {
+                                webView.goBack();
+                            } else {
+                            }
+                            return true;
+                    }
+
+
+                }
+                return false;
+            }
+        } );
+
         return v;
     }
+
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

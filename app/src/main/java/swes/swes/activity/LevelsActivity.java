@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,7 @@ public class LevelsActivity extends AppCompatActivity {
                     Log.d("Levels",entry.getKey() );
 
                 }
+                Collections.sort(levelList);
                 gridView.setAdapter(new HomeGridViewAdapter(LevelsActivity.this,levelList));
             }
 

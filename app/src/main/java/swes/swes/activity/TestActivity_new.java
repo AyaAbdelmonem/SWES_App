@@ -1,26 +1,21 @@
 package swes.swes.activity;//package swes.swes.activity;
 
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -29,10 +24,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 import swes.swes.R;
+import swes.swes.classes.Question;
 import swes.swes.classes.Test;
 
 public class TestActivity_new extends AppCompatActivity {
@@ -49,9 +45,20 @@ public class TestActivity_new extends AppCompatActivity {
         Test test =new Test();
         Gson gson =new Gson();
         test=(Test) gson.fromJson(test_string,Test.class);
+        List<Question> questions =new ArrayList<>();
+       //  Log.d("T111111111111",test.getQuestions().get(0).getQuestion());
+        if (test==null)
+        {
+            Toast.makeText(this, "No test at this lesson", Toast.LENGTH_SHORT).show();
+            onBackPressed();
+            return;
 
-     //  Log.d("T111111111111",test.getQuestions().get(0).getQuestion());
-
+        }
+        for(Question question : test.getQuestions()){
+            if(question!=null){
+                questions.add(question);
+            }
+        }
 
 
         pager = (ViewPager)findViewById(R.id.container);
@@ -67,27 +74,27 @@ public class TestActivity_new extends AppCompatActivity {
 
         ArrayList<String> test_Quest_List=new ArrayList<>();
         if (test!=null) {
-            if (test.getQuestions().size() > 0) {
-                for (int i = 0; i < test.getQuestions().size(); i++) {
-                    test_Quest_List.add(test.getQuestions().get(i).getQuestion());
+            if (questions.size() > 0) {
+                for (int i = 0; i < questions.size(); i++) {
+                    test_Quest_List.add(questions.get(i).getQuestion());
                 }
             }
 
             ArrayList<String> test_right_List = new ArrayList<>();
-            if (test.getQuestions().size() > 0) {
-                for (int i = 0; i < test.getQuestions().size(); i++) {
-                    test_right_List.add(test.getQuestions().get(i).getRightAnswer());
+            if (questions.size() > 0) {
+                for (int i = 0; i < questions.size(); i++) {
+                    test_right_List.add(questions.get(i).getRightAnswer());
                 }
             }
 
 
             ArrayList<String> test_ans_List = new ArrayList<>();
-            if (test.getQuestions().size() > 0) {
-                for (int i = 0; i < test.getQuestions().size(); i++) {
-                    test_ans_List.add(test.getQuestions().get(i).getAnswers().get(0)
-                            + "---" + test.getQuestions().get(i).getAnswers().get(1)
-                            + "---" + test.getQuestions().get(i).getAnswers().get(2)
-                            + "---" + test.getQuestions().get(i).getAnswers().get(3)
+            if (questions.size() > 0) {
+                for (int i = 0; i < questions.size(); i++) {
+                    test_ans_List.add(questions.get(i).getAnswers().get(0)
+                            + "---" + questions.get(i).getAnswers().get(1)
+                            + "---" + questions.get(i).getAnswers().get(2)
+                            + "---" + questions.get(i).getAnswers().get(3)
 
                     );
                 }
@@ -105,7 +112,7 @@ public class TestActivity_new extends AppCompatActivity {
 
             if (quest_arr.length > 0) {
                 adapter = new MyFragmentAdapter(getSupportFragmentManager(),
-                        test.getQuestions().size()
+                       questions.size()
                         , this, quest_arr, ans_arr, right_arr);
                 pager.setAdapter(adapter);
             }
@@ -181,57 +188,46 @@ public class TestActivity_new extends AppCompatActivity {
 
         private String answers;
 
-        private  String RightAns;
+        private String RightAns;
 
         Button btnDisplay;
-        RadioGroup radioGroup;
         RadioButton radioButton;
+        RadioGroup radioGroup;
 
-        public MyFragment(String text,String ans, String right, Context context) {
+        public MyFragment(String text, String ans, String right, Context context) {
             this.text = text;
-            this.answers=ans;
-            this.RightAns=right;
+            this.answers = ans;
+            this.RightAns = right;
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_test_activity_new, null);
-            ((TextView)view.findViewById(R.id.section_label)).setText(text);
+            final View view = inflater.inflate(R.layout.fragment_test_activity_new, null);
+            ((TextView) view.findViewById(R.id.section_label)).setText(text);
 
 
             radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
             btnDisplay = (Button) view.findViewById(R.id.btnDisplay);
 
 
-            RadioButton radioButton1,radioButton2,radioButton3,radioButton4;
-            radioButton1=(RadioButton)view.findViewById(R.id.answer1);
-            radioButton2=(RadioButton)view.findViewById(R.id.answer2);
-            radioButton3=(RadioButton)view.findViewById(R.id.answer3);
-            radioButton4=(RadioButton)view.findViewById(R.id.answer4);
+            RadioButton radioButton1, radioButton2, radioButton3, radioButton4;
+            radioButton1 = (RadioButton) view.findViewById(R.id.answer1);
+            radioButton2 = (RadioButton) view.findViewById(R.id.answer2);
+            radioButton3 = (RadioButton) view.findViewById(R.id.answer3);
+            radioButton4 = (RadioButton) view.findViewById(R.id.answer4);
 
 
             StringTokenizer tokens = new StringTokenizer(answers, "---");
 
             String first = tokens.nextToken();// this will contain "Fruit"
             String second = tokens.nextToken();
-            String third= tokens.nextToken();
-            String fourth= tokens.nextToken();
+            String third = tokens.nextToken();
+            String fourth = tokens.nextToken();
 
-            radioButton1.setText(first);radioButton2.setText(second);radioButton3.setText(third);
+            radioButton1.setText(first);
+            radioButton2.setText(second);
+            radioButton3.setText(third);
             radioButton4.setText(fourth);
-
-
-           addListenerOnButton();
-
-
-            return view;
-        }
-
-
-        public void addListenerOnButton() {
-
-
-
             btnDisplay.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -241,23 +237,55 @@ public class TestActivity_new extends AppCompatActivity {
                     int selectedId = radioGroup.getCheckedRadioButtonId();
 
                     // find the radiobutton by returned id
-                    radioButton = (RadioButton) getActivity().findViewById(selectedId);
+                    radioButton = (RadioButton)view.findViewById(selectedId);
 
-
+                    try{
                     if (radioButton.getText().toString().equals(RightAns))
                     {
-                        Toast.makeText(getActivity(),
-                         "Right Answer", Toast.LENGTH_SHORT).show();
+
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
+                        dialog.setCancelable(false);
+                        dialog.setTitle("Result");
+                        dialog.setMessage("Great! Right answer" );
+                        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                //Action for "Delete".
+                            }
+                        });
+
+                        final AlertDialog alert = dialog.create();
+                        alert.show();
+                    }
+                    else{
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
+                        dialog.setCancelable(false);
+                        dialog.setTitle("Result");
+                        dialog.setMessage("Sorry! Wrong answer" );
+                        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                //Action for "Delete".
+                            }
+                        });
+
+                        final AlertDialog alert = dialog.create();
+                        alert.show();
+                    }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
                     }
 
                 }
 
             });
 
+
+
+
+            return view;
         }
-
-
-
 
 
     }

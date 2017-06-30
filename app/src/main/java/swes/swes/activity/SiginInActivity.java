@@ -48,6 +48,10 @@ public class SiginInActivity extends AppCompatActivity  implements GoogleApiClie
     private FirebaseAuth mFirebaseAuth;
     GoogleApiClient googleApiClient;
     Boolean value;
+    GoogleSignInAccount account;
+
+    String infoname ;
+    String infoemail ;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressBar progressBar;
@@ -232,8 +236,12 @@ public class SiginInActivity extends AppCompatActivity  implements GoogleApiClie
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = result.getSignInAccount();
+
+                account = result.getSignInAccount();
+                infoname = account.getDisplayName();
+                infoemail = account.getEmail();
                 firebaseAuthWithGoogle(account);
+
             } else {
                 // Google Sign In failed
                 Log.e(TAG, "Google Sign In failed.");
@@ -258,6 +266,13 @@ public class SiginInActivity extends AppCompatActivity  implements GoogleApiClie
                             Toast.makeText(SiginInActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
+                            final FirebaseUser google_uer = mFirebaseAuth.getCurrentUser();
+
+                            s.setEmail(infoemail);
+                            s.setName(infoname);
+                            //s.setStudentPicture(photoUrl.toString());
+                            mDatabase.child("students").child(google_uer.getUid().toString()).setValue(s);
+                            mDatabase.child("students").child(google_uer.getUid().toString()).child("is_verified").setValue(true);
                             startActivity(new Intent(SiginInActivity.this, MainActivity.class));
                             finish();
                         }

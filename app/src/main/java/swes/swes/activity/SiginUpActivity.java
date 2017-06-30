@@ -137,7 +137,7 @@ public class SiginUpActivity extends AppCompatActivity {
 
                                             else
                                             {
-                                                auth.signOut();
+//                                                auth.signOut();
                                                 Intent intent = new Intent(SiginUpActivity.this, activationWarning.class);
                                                 startActivity(intent);
                                                 finish();

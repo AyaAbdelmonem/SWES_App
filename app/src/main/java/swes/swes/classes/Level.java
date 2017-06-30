@@ -1,15 +1,14 @@
 package swes.swes.classes;
 
-import java.io.Serializable;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by Sameh on 3/24/2017.
  */
 
-public class Level implements Serializable {
+public class Level implements Comparable<Level> {
 
-    private Map<String,Lesson> Lessons;
+    private List<Lesson> Lessons;
     private  String caseStudy;
     private  String LevelName;
     private  int LevelNumber;
@@ -40,11 +39,26 @@ public class Level implements Serializable {
     }
 
 
-    public Map<String, Lesson> getLessons() {
+    public  List<Lesson> getLessons() {
         return Lessons;
     }
 
-    public void setLessons(Map<String, Lesson> lessons) {
+    public void setLessons( List<Lesson> lessons) {
         Lessons = lessons;
+    }
+
+    @Override
+    public int compareTo(Level level) {
+        if (LevelNumber > level.getLevelNumber()) {
+            return 1;
+        }
+        else if (LevelNumber < level.getLevelNumber()) {
+            return -1;
+        }
+        else {
+            return 0;
+        }
+
+
     }
 }
