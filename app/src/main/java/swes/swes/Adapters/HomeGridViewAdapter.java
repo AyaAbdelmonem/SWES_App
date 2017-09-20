@@ -84,9 +84,13 @@ public class HomeGridViewAdapter extends BaseAdapter {
         }
         }
         if (convertView == null) {
-
             grid = new View(mContext);
             grid = inflater.inflate(R.layout.grid_single, null);
+        }else{
+        grid = (View) convertView;
+      }
+
+
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);
          bmb  = (BoomMenuButton) grid.findViewById(R.id.grid_bmb);
             textView.setText(levels.get(position).getLevelName());
@@ -165,9 +169,7 @@ public class HomeGridViewAdapter extends BaseAdapter {
 
 
 
-            }else{
-                grid = (View) convertView;
-            }
+
 
 
 

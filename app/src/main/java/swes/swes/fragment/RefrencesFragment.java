@@ -15,8 +15,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import swes.swes.R;
-import swes.swes.activity.CaseStudyActivity;
-import swes.swes.activity.WebViewController;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,7 +89,7 @@ public class RefrencesFragment extends Fragment {
             }
         });
 
-        progressBar = ProgressDialog.show(getActivity(), "Loading casestudy", "Loading...");
+        progressBar = ProgressDialog.show(getActivity(), "Loading Library  ", "Loading...");
 
         webView.setWebViewClient(new WebViewClient() {
 

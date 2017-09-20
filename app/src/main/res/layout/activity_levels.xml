@@ -31,17 +31,16 @@
         >
 
 
-        <GridView
+        <ListView
             android:id="@+id/grid_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:horizontalSpacing="5dp"
-            android:verticalSpacing="5dp"
             android:gravity="center"
             android:layout_marginTop="40dp"
             >
 
-        </GridView>
+        </ListView>
 
     </LinearLayout>
 </FrameLayout>

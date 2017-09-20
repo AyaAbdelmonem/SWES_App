@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.GridView;
+import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,7 +35,7 @@ public class LevelsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Course Levels");
-         final GridView gridView = (GridView) findViewById(R.id.grid_view);
+         final ListView gridView = (ListView) findViewById(R.id.grid_view);
 
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
